@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a full-stack web application built as a central dashboard for managing multiple AI agents and a shared database. The application serves as a unified control center with a sophisticated dark theme design featuring monitoring capabilities, real-time metrics, and agent management functionality.
+This is a full-stack web application built as a central dashboard for managing 7 specialized AI agents and a shared database. The application serves as a unified control center with sophisticated Performance Oracle styling - featuring holographic cards, gradient animations, neural network backgrounds, and real-time monitoring capabilities.
 
 ## User Preferences
 
@@ -34,6 +34,17 @@ The application follows a modern full-stack architecture with clear separation b
 - **Schema Location**: `shared/schema.ts` - centralized schema definitions
 - **Migrations**: Managed through `drizzle-kit` with migrations stored in `./migrations`
 
+### Specialized AI Agents
+The application manages 7 specialized AI agents for comprehensive social media and marketing automation:
+
+1. **Discovery Agent**: Strategic intelligence hub for niche identification & audience profiling
+2. **Lead Scout Agent**: Precision lead extraction with behavioral prediction algorithms
+3. **Content Forge Agent**: AI-powered content creation & optimization engine
+4. **Outreach Nexus Agent**: Hyper-personalized cross-platform communication
+5. **Performance Oracle**: Predictive analytics & autonomous optimization
+6. **UGC Catalyst Agent**: Community amplification & user-generated content management
+7. **Voice & Messaging Negotiator**: AI-powered voice calls & text conversations
+
 ### Shared Schema
 The application defines several core entities:
 - **Agents**: AI agents with status tracking, activity monitoring, and task completion metrics
@@ -43,10 +54,12 @@ The application defines several core entities:
 - **Performance Metrics**: Engagement rates, content quality scores, and response times
 
 ### Frontend Components
-- **Dashboard**: Main dashboard with real-time metrics and agent overview
-- **Agent Cards**: Individual agent status and management interfaces
+- **Dashboard**: Main dashboard with real-time metrics and agent overview with Performance Oracle styling
+- **Database Management**: Comprehensive database management interface with table visualization and query tools
+- **Agent Cards**: Individual agent status and management interfaces with holographic styling
 - **Activity Feed**: Real-time activity streaming with categorized notifications
-- **Metrics Display**: System performance and database statistics visualization
+- **Metrics Display**: System performance and database statistics visualization with gradient animations
+- **Navigation**: Seamless routing between dashboard and database management pages
 - **Responsive Design**: Mobile-first approach with desktop enhancements
 
 ### Storage Architecture

@@ -7,6 +7,7 @@ import { PerformanceMetrics } from "@/components/performance-metrics";
 import { DatabaseStatus } from "@/components/database-status";
 import { useToast } from "@/hooks/use-toast";
 import { RefreshCw, Settings, Power, Database, Play } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Dashboard() {
   const { toast } = useToast();
@@ -121,24 +122,26 @@ export default function Dashboard() {
             <div>
               <h3 className="text-xs lg:text-sm text-dark-accent2 font-medium uppercase tracking-wider mb-4">System Management</h3>
               <div className="space-y-3">
-                <div className="holographic rounded-xl p-4 group hover:scale-105 transition-all duration-300 cursor-pointer">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 lg:p-3 rounded-lg bg-dark-accent2/10">
-                      <Database className="w-4 h-4 lg:w-5 lg:h-5 text-dark-accent2" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-sm lg:text-base font-semibold text-white">Database Manager</h4>
-                      <p className="text-xs text-gray-400">Shared data & analytics</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <div className="w-1.5 h-1.5 rounded-full bg-dark-accent2 animate-pulse"></div>
-                        <span className="text-xs text-dark-accent2">Syncing</span>
+                <Link href="/database">
+                  <div className="holographic rounded-xl p-4 group hover:scale-105 transition-all duration-300 cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 lg:p-3 rounded-lg bg-dark-accent2/10">
+                        <Database className="w-4 h-4 lg:w-5 lg:h-5 text-dark-accent2" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-sm lg:text-base font-semibold text-white">Database Manager</h4>
+                        <p className="text-xs text-gray-400">Shared data & analytics</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-dark-accent2 animate-pulse"></div>
+                          <span className="text-xs text-dark-accent2">Syncing</span>
+                        </div>
                       </div>
                     </div>
+                    <div className="mt-3 h-1 bg-dark-primary rounded-full overflow-hidden">
+                      <div className="animation-line bg-dark-accent2"></div>
+                    </div>
                   </div>
-                  <div className="mt-3 h-1 bg-dark-primary rounded-full overflow-hidden">
-                    <div className="animation-line bg-dark-accent2"></div>
-                  </div>
-                </div>
+                </Link>
               </div>
             </div>
 

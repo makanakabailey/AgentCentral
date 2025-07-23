@@ -60,69 +60,69 @@ export class MemStorage implements IStorage {
   }
 
   private initializeData() {
-    // Initialize agents
+    // Initialize agents - 7 specialized AI agents
     const initialAgents: InsertAgent[] = [
       {
-        name: "Content Creator",
-        description: "Social media content generation",
-        icon: "fas fa-pencil-alt",
+        name: "Discovery Agent",
+        description: "Strategic intelligence hub for niche identification & audience profiling",
+        icon: "fas fa-search",
         status: "active",
         color: "dark-accent",
-        tasksCompleted: 156,
+        tasksCompleted: 342,
         isActive: true,
       },
       {
-        name: "Engagement Tracker",
-        description: "Analytics and insights",
-        icon: "fas fa-chart-line",
+        name: "Lead Scout Agent",
+        description: "Precision lead extraction with behavioral prediction",
+        icon: "fas fa-crosshairs",
         status: "active",
         color: "dark-accent2",
-        tasksCompleted: 89,
+        tasksCompleted: 267,
         isActive: true,
       },
       {
-        name: "Smart Scheduler",
-        description: "Automated posting schedule",
-        icon: "fas fa-calendar-alt",
+        name: "Content Forge Agent",
+        description: "AI-powered content creation & optimization engine",
+        icon: "fas fa-hammer",
         status: "active",
         color: "dark-accent",
-        tasksCompleted: 234,
-        isActive: true,
-      },
-      {
-        name: "Influencer Finder",
-        description: "Partner discovery & outreach",
-        icon: "fas fa-users",
-        status: "active",
-        color: "dark-accent2",
-        tasksCompleted: 67,
-        isActive: true,
-      },
-      {
-        name: "Trend Analyzer",
-        description: "Market trend detection",
-        icon: "fas fa-trending-up",
-        status: "active",
-        color: "dark-accent",
-        tasksCompleted: 123,
-        isActive: true,
-      },
-      {
-        name: "Community Manager",
-        description: "Engagement & responses",
-        icon: "fas fa-comments",
-        status: "active",
-        color: "dark-accent2",
         tasksCompleted: 189,
         isActive: true,
       },
       {
+        name: "Outreach Nexus Agent",
+        description: "Hyper-personalized cross-platform communication",
+        icon: "fas fa-satellite-dish",
+        status: "active",
+        color: "dark-accent2",
+        tasksCompleted: 445,
+        isActive: true,
+      },
+      {
         name: "Performance Oracle",
-        description: "AI-driven optimizations",
+        description: "Predictive analytics & autonomous optimization",
         icon: "fas fa-brain",
         status: "active",
         color: "dark-accent",
-        tasksCompleted: 276,
+        tasksCompleted: 523,
+        isActive: true,
+      },
+      {
+        name: "UGC Catalyst Agent",
+        description: "Community amplification & user-generated content",
+        icon: "fas fa-users-cog",
+        status: "active",
+        color: "dark-accent2",
+        tasksCompleted: 298,
+        isActive: true,
+      },
+      {
+        name: "Voice & Messaging Negotiator",
+        description: "AI-powered voice calls & text conversations",
+        icon: "fas fa-phone-alt",
+        status: "active",
+        color: "dark-accent",
+        tasksCompleted: 156,
         isActive: true,
       },
     ];
@@ -187,27 +187,45 @@ export class MemStorage implements IStorage {
     const initialActivities: InsertActivity[] = [
       {
         agentId: 1,
-        message: "Content Creator generated 3 new posts",
+        message: "Discovery Agent identified 12 high-opportunity niches with 85+ viability scores",
         type: "success",
-        icon: "fas fa-pencil-alt",
+        icon: "fas fa-search",
       },
       {
         agentId: 2,
-        message: "Engagement Tracker analyzed 1.2K interactions",
+        message: "Lead Scout Agent profiled 847 high-intent leads with behavioral predictions",
         type: "info",
-        icon: "fas fa-chart-line",
+        icon: "fas fa-crosshairs",
       },
       {
         agentId: 3,
-        message: "Smart Scheduler queued 15 posts for tomorrow",
+        message: "Content Forge Agent generated 15 platform-optimized content pieces",
         type: "success",
-        icon: "fas fa-calendar-alt",
+        icon: "fas fa-hammer",
       },
       {
         agentId: 4,
-        message: "Influencer Finder identified 5 potential partners",
+        message: "Outreach Nexus Agent executed 23 personalized campaigns with 78% response rate",
+        type: "success",
+        icon: "fas fa-satellite-dish",
+      },
+      {
+        agentId: 5,
+        message: "Performance Oracle optimized 5 campaigns with +32% conversion improvement",
+        type: "success",
+        icon: "fas fa-brain",
+      },
+      {
+        agentId: 6,
+        message: "UGC Catalyst Agent amplified 34 user testimonials across platforms",
         type: "info",
-        icon: "fas fa-users",
+        icon: "fas fa-users-cog",
+      },
+      {
+        agentId: 7,
+        message: "Voice Negotiator completed 8 qualification calls with 67% conversion",
+        type: "success",
+        icon: "fas fa-phone-alt",
       },
     ];
 
@@ -230,6 +248,10 @@ export class MemStorage implements IStorage {
       ...insertAgent,
       id,
       lastActivity: new Date(),
+      color: insertAgent.color || "dark-accent",
+      status: insertAgent.status || "active",
+      tasksCompleted: insertAgent.tasksCompleted || 0,
+      isActive: insertAgent.isActive !== undefined ? insertAgent.isActive : true,
     };
     this.agents.set(id, agent);
     return agent;
@@ -282,6 +304,7 @@ export class MemStorage implements IStorage {
       ...insertActivity,
       id,
       timestamp: new Date(),
+      type: insertActivity.type || "info",
     };
     this.activities.set(id, activity);
     return activity;
@@ -297,6 +320,8 @@ export class MemStorage implements IStorage {
       ...insertStats,
       id,
       lastSync: new Date(),
+      records: insertStats.records || 0,
+      sizeBytes: insertStats.sizeBytes || 0,
     };
     this.databaseStats.set(id, stats);
     return stats;
@@ -326,6 +351,7 @@ export class MemStorage implements IStorage {
       ...insertMetrics,
       id,
       timestamp: new Date(),
+      trendData: insertMetrics.trendData || [60, 45, 70, 55, 80, 65, 90, 75, 85, 95],
     };
     this.performanceMetrics.set(id, metrics);
     return metrics;
