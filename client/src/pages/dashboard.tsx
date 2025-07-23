@@ -85,9 +85,11 @@ export default function Dashboard() {
               <RefreshCw className="w-4 h-4 lg:w-5 lg:h-5 text-dark-accent" />
             </button>
             
-            <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
-              <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
-            </button>
+            <Link href="/settings">
+              <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
+                <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
+              </button>
+            </Link>
           </div>
         </div>
       </header>

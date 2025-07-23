@@ -1,4 +1,5 @@
 import type { Agent } from "@shared/schema";
+import { Link } from "wouter";
 
 interface AgentCardProps {
   agent: Agent;
@@ -29,11 +30,25 @@ export function AgentCard({ agent }: AgentCardProps) {
     }
   };
 
+  const getAgentRoute = (name: string) => {
+    const routeMap: Record<string, string> = {
+      "Discovery Agent": "/agents/discovery",
+      "Lead Scout Agent": "/agents/lead-scout",
+      "Content Forge Agent": "/agents/content-forge",
+      "Outreach Nexus Agent": "/agents/outreach-nexus",
+      "Performance Oracle": "/agents/performance-oracle",
+      "UGC Catalyst Agent": "/agents/ugc-catalyst",
+      "Voice & Messaging Negotiator": "/agents/voice-messaging",
+    };
+    return routeMap[name] || "/dashboard";
+  };
+
   const colorClass = getColorClass(agent.color);
   const statusColorClass = getStatusColor(agent.status);
 
   return (
-    <div className="holographic rounded-xl p-4 group hover:scale-105 transition-all duration-300 cursor-pointer">
+    <Link href={getAgentRoute(agent.name)}>
+      <div className="holographic rounded-xl p-4 group hover:scale-105 transition-all duration-300 cursor-pointer">
       <div className="flex items-center gap-3">
         <div className={`p-2 lg:p-3 rounded-lg ${colorClass}`}>
           <i className={`${agent.icon} w-4 h-4 lg:w-5 lg:h-5`}></i>
@@ -58,6 +73,7 @@ export function AgentCard({ agent }: AgentCardProps) {
       <div className="mt-3 h-1 bg-dark-primary rounded-full overflow-hidden">
         <div className={`animation-line ${agent.color === 'dark-accent2' ? 'bg-dark-accent2' : 'bg-dark-accent'}`}></div>
       </div>
-    </div>
+      </div>
+    </Link>
   );
 }
