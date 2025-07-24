@@ -13,6 +13,7 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(240, 3.7%, 15.9%);
   --input: hsl(240, 3.7%, 15.9%);
+  --input-text: hsl(240, 5%, 26%); /* Dark grey text for inputs */
   --primary: hsl(154, 100%, 50%);
   --primary-foreground: hsl(240, 16%, 6%);
   --secondary: hsl(240, 3.7%, 15.9%);

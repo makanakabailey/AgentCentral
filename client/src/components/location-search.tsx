@@ -203,7 +203,7 @@ export default function LocationSearch({
           }}
           onFocus={() => setIsOpen(true)}
           placeholder={placeholder}
-          className="pl-10 pr-10 bg-dark-surface/50 border-dark-accent/30 focus:border-dark-accent/50"
+          className="pl-10 pr-10 bg-dark-surface/50 border-dark-accent/30 focus:border-dark-accent/50 text-gray-600"
         />
         <Button
           variant="ghost"

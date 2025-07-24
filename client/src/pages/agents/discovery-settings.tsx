@@ -171,7 +171,7 @@ export default function DiscoverySettings() {
                         id="google-api"
                         type={showApiKeys ? "text" : "password"}
                         value={showApiKeys ? "gt_123456789abcdef" : apiConfig.googleTrendsApiKey}
-                        className="bg-dark-surface/50 border-dark-accent/30"
+                        className="bg-dark-surface/50 border-dark-accent/30 text-gray-600"
                       />
                     </div>
                     <div>
@@ -180,7 +180,7 @@ export default function DiscoverySettings() {
                         id="reddit-api"
                         type={showApiKeys ? "text" : "password"}
                         value={showApiKeys ? "rd_987654321fedcba" : apiConfig.redditApiKey}
-                        className="bg-dark-surface/50 border-dark-accent/30"
+                        className="bg-dark-surface/50 border-dark-accent/30 text-gray-600"
                       />
                     </div>
                     <div>
@@ -189,7 +189,7 @@ export default function DiscoverySettings() {
                         id="twitter-api"
                         type={showApiKeys ? "text" : "password"}
                         value={showApiKeys ? "tw_abcdef123456789" : apiConfig.twitterApiKey}
-                        className="bg-dark-surface/50 border-dark-accent/30"
+                        className="bg-dark-surface/50 border-dark-accent/30 text-gray-600"
                       />
                     </div>
                     <div>
@@ -198,7 +198,7 @@ export default function DiscoverySettings() {
                         id="scraping-api"
                         type={showApiKeys ? "text" : "password"}
                         value={showApiKeys ? "sb_fedcba987654321" : apiConfig.scrapingBeeApiKey}
-                        className="bg-dark-surface/50 border-dark-accent/30"
+                        className="bg-dark-surface/50 border-dark-accent/30 text-gray-600"
                       />
                     </div>
                   </div>

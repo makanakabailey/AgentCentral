@@ -201,7 +201,7 @@ export default function DiscoveryControls() {
                       value={config.businessDomain}
                       onChange={(e) => setConfig({...config, businessDomain: e.target.value})}
                       placeholder="e.g., vegan skincare, sustainable fashion"
-                      className="bg-dark-surface/50 border-dark-accent/30"
+                      className="bg-dark-surface/50 border-dark-accent/30 text-gray-600"
                     />
                   </div>
                   <div>
@@ -224,7 +224,7 @@ export default function DiscoveryControls() {
                       value={config.budgetThreshold}
                       onChange={(e) => setConfig({...config, budgetThreshold: parseInt(e.target.value)})}
                       placeholder="10000"
-                      className="bg-dark-surface/50 border-dark-accent/30"
+                      className="bg-dark-surface/50 border-dark-accent/30 text-gray-600"
                     />
                   </div>
                 </CardContent>
@@ -515,8 +515,9 @@ export default function DiscoveryControls() {
                       excludedTopics: e.target.value.split(', ').filter(t => t.trim())
                     })}
                     placeholder="animal testing, synthetic chemicals, controversial topics"
-                    className="bg-dark-surface/50 border-dark-accent/30 min-h-24"
+                    className="bg-dark-surface/50 border-dark-accent/30 min-h-24 text-gray-600"
                   />
+               
                   <div className="flex flex-wrap gap-2">
                     {config.excludedTopics.map((topic, index) => (
                       <Badge key={index} variant="secondary" className="bg-red-500/20 text-red-300">
