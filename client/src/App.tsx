@@ -14,6 +14,10 @@ import LeadScoutControls from "@/pages/agents/lead-scout-controls";
 import LeadScoutSettings from "@/pages/agents/lead-scout-settings";
 import LeadScoutLeads from "@/pages/agents/lead-scout-leads";
 import ContentForgeAgent from "@/pages/agents/content-forge-agent";
+import ContentForgeSettings from "@/pages/agents/content-forge-settings";
+import ContentForgeControls from "@/pages/agents/content-forge-controls";
+import ContentForgeCreator from "@/pages/agents/content-forge-creator";
+import ContentForgeStock from "@/pages/agents/content-forge-stock";
 import OutreachNexusAgent from "@/pages/agents/outreach-nexus-agent";
 import PerformanceOracle from "@/pages/agents/performance-oracle";
 import UGCCatalystAgent from "@/pages/agents/ugc-catalyst-agent";
@@ -35,6 +39,10 @@ function Router() {
       <Route path="/agents/lead-scout/settings" component={LeadScoutSettings} />
       <Route path="/agents/lead-scout/leads" component={LeadScoutLeads} />
       <Route path="/agents/content-forge" component={ContentForgeAgent} />
+      <Route path="/agents/content-forge/settings" component={ContentForgeSettings} />
+      <Route path="/agents/content-forge/controls" component={ContentForgeControls} />
+      <Route path="/agents/content-forge/creator" component={ContentForgeCreator} />
+      <Route path="/agents/content-forge/stock" component={ContentForgeStock} />
       <Route path="/agents/outreach-nexus" component={OutreachNexusAgent} />
       <Route path="/agents/performance-oracle" component={PerformanceOracle} />
       <Route path="/agents/ugc-catalyst" component={UGCCatalystAgent} />

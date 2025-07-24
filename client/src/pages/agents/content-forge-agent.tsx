@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { Hammer, ArrowLeft, FileText, Image, Video, Zap, Brain, Settings, Play, Download, Upload } from "lucide-react";
+import { Hammer, ArrowLeft, FileText, Image, Video, Zap, Brain, Settings, Play, Download, Upload, Sliders, Wand2, Archive } from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 
@@ -40,8 +40,8 @@ export default function ContentForgeAgent() {
                 <ArrowLeft className="w-5 h-5" />
               </button>
             </Link>
-            <div className="p-3 rounded-lg bg-dark-accent/20">
-              <Hammer className="w-6 h-6 text-dark-accent" />
+            <div className="p-3 rounded-lg bg-orange-500/20">
+              <Hammer className="w-6 h-6 text-orange-400" />
             </div>
             <div>
               <h1 className="text-xl lg:text-2xl font-bold gradient-text">CONTENT FORGE AGENT</h1>
@@ -51,7 +51,7 @@ export default function ContentForgeAgent() {
           
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-dark-accent animate-pulse"></div>
+              <div className="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></div>
               <span className="text-xs text-gray-400">
                 {contentForgeAgent?.isActive ? "Creating" : "Standby"}
               </span>
@@ -59,14 +59,22 @@ export default function ContentForgeAgent() {
             
             <button
               onClick={handleOptimizeContent}
-              className="p-2 lg:p-3 rounded-lg bg-dark-accent/10 hover:bg-dark-accent/20 transition-colors"
+              className="p-2 lg:p-3 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 transition-colors"
             >
-              <Brain className="w-4 h-4 lg:w-5 lg:h-5 text-dark-accent" />
+              <Brain className="w-4 h-4 lg:w-5 lg:h-5 text-orange-400" />
             </button>
             
-            <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
-              <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
-            </button>
+            <Link href="/agents/content-forge/controls">
+              <button className="p-2 lg:p-3 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 transition-colors">
+                <Sliders className="w-4 h-4 lg:w-5 lg:h-5 text-orange-400" />
+              </button>
+            </Link>
+            
+            <Link href="/agents/content-forge/settings">
+              <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
+                <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
+              </button>
+            </Link>
           </div>
         </div>
       </header>
@@ -227,36 +235,42 @@ export default function ContentForgeAgent() {
                 <h3 className="text-xl font-bold text-white">Forge Controls</h3>
               </div>
               <div className="space-y-3">
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <FileText className="w-4 h-4 text-dark-accent" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Generate Articles</p>
-                      <p className="text-xs text-gray-400">AI-powered blog content</p>
+                <Link href="/agents/content-forge/creator">
+                  <button className="w-full p-3 rounded-lg bg-orange-500/20 text-left hover:bg-orange-500/30 transition-colors border border-orange-500/30">
+                    <div className="flex items-center gap-3">
+                      <Wand2 className="w-4 h-4 text-orange-400" />
+                      <div>
+                        <p className="text-sm font-medium text-white">Content Creator</p>
+                        <p className="text-xs text-gray-400">AI-powered content generation</p>
+                      </div>
                     </div>
-                  </div>
-                </button>
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Image className="w-4 h-4 text-dark-accent" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Create Visuals</p>
-                      <p className="text-xs text-gray-400">Graphics & infographics</p>
+                  </button>
+                </Link>
+                <Link href="/agents/content-forge/controls">
+                  <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Sliders className="w-4 h-4 text-orange-400" />
+                      <div>
+                        <p className="text-sm font-medium text-white">Forge Controls</p>
+                        <p className="text-xs text-gray-400">Generation management</p>
+                      </div>
                     </div>
-                  </div>
-                </button>
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Video className="w-4 h-4 text-dark-accent" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Video Production</p>
-                      <p className="text-xs text-gray-400">Automated video creation</p>
+                  </button>
+                </Link>
+                <Link href="/agents/content-forge/stock">
+                  <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Archive className="w-4 h-4 text-orange-400" />
+                      <div>
+                        <p className="text-sm font-medium text-white">Content Stock</p>
+                        <p className="text-xs text-gray-400">Content library & management</p>
+                      </div>
                     </div>
-                  </div>
-                </button>
+                  </button>
+                </Link>
                 <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
                   <div className="flex items-center gap-3">
-                    <Upload className="w-4 h-4 text-dark-accent" />
+                    <Upload className="w-4 h-4 text-orange-400" />
                     <div>
                       <p className="text-sm font-medium text-white">Bulk Upload</p>
                       <p className="text-xs text-gray-400">Multi-platform publishing</p>
