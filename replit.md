@@ -54,6 +54,10 @@ The application defines several core entities:
 - **Performance Metrics**: Engagement rates, content quality scores, and response times
 - **Discovery Agent Config**: Business domain settings, geographical focus, analysis parameters, and optimization preferences
 - **Discovery Results**: Niche analysis results with viability scores, audience archetypes, and predictive metrics
+- **Content Templates**: Template storage with categorization, platform targeting, and thumbnail previews
+- **Content API Keys**: Secure storage and management of external service API keys for content creation
+- **Bulk Uploads**: File upload tracking with progress monitoring and error handling
+- **Quick Actions**: Predefined content generation templates with customizable parameters
 
 ### Frontend Components
 - **Dashboard**: Main dashboard with real-time metrics and agent overview with Performance Oracle styling
@@ -66,6 +70,12 @@ The application defines several core entities:
   - Main agent dashboard with real-time status and controls
   - AI Controls page with comprehensive configuration options and Google Maps location search
   - Settings page with API configuration, performance tuning, and data management
+- **Content Forge Agent Enhanced Features**:
+  - Quick Actions page with 12+ pre-built content generation templates
+  - Bulk Upload system for mass content import (ZIP, CSV, JSON support)
+  - Template Library for importing ready-made templates from external platforms
+  - API Key Manager for integrating external content creation services (OpenAI, Canva, Adobe, etc.)
+  - Service integration with popular tools like Midjourney, Figma, ElevenLabs, and more
 - **Location Search Component**: Google Maps-integrated location picker with smart predictions
 - **Responsive Design**: Mobile-first approach with desktop enhancements
 

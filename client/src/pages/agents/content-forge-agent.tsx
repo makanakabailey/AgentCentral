@@ -268,15 +268,50 @@ export default function ContentForgeAgent() {
                     </div>
                   </button>
                 </Link>
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Upload className="w-4 h-4 text-orange-400" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Bulk Upload</p>
-                      <p className="text-xs text-gray-400">Multi-platform publishing</p>
+                <Link href="/agents/content-forge/bulk-upload">
+                  <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Upload className="w-4 h-4 text-orange-400" />
+                      <div>
+                        <p className="text-sm font-medium text-white">Bulk Upload</p>
+                        <p className="text-xs text-gray-400">Mass content import & processing</p>
+                      </div>
                     </div>
-                  </div>
-                </button>
+                  </button>
+                </Link>
+                <Link href="/agents/content-forge/quick-actions">
+                  <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Zap className="w-4 h-4 text-orange-400" />
+                      <div>
+                        <p className="text-sm font-medium text-white">Quick Actions</p>
+                        <p className="text-xs text-gray-400">Instant content generation</p>
+                      </div>
+                    </div>
+                  </button>
+                </Link>
+                <Link href="/agents/content-forge/templates">
+                  <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
+                    <div className="flex items-center gap-3">
+                      <FileText className="w-4 h-4 text-orange-400" />
+                      <div>
+                        <p className="text-sm font-medium text-white">Template Library</p>
+                        <p className="text-xs text-gray-400">Import & manage templates</p>
+                      </div>
+                    </div>
+                  </button>
+                </Link>
+                <Link href="/agents/content-forge/api-keys">
+                  <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Settings className="w-4 h-4 text-orange-400" />
+                      <div>
+                        <p className="text-sm font-medium text-white">API Keys</p>
+                        <p className="text-xs text-gray-400">Service integrations</p>
+                      </div>
+                    </div>
+                  </button>
+                </Link>
               </div>
             </div>
 

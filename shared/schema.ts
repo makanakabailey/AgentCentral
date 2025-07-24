@@ -110,9 +110,86 @@ export const insertDiscoveryAgentConfigSchema = createInsertSchema(discoveryAgen
   lastUpdated: true,
 });
 
+export const contentTemplates = pgTable("content_templates", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description"),
+  category: text("category").notNull(), // social-post, blog, email, video-script, etc.
+  platform: text("platform"), // instagram, facebook, youtube, etc.
+  templateData: jsonb("template_data").notNull(), // template structure and content
+  thumbnail: text("thumbnail"), // base64 or URL
+  tags: text("tags").array(),
+  isPublic: boolean("is_public").default(false),
+  createdBy: text("created_by").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const contentApiKeys = pgTable("content_api_keys", {
+  id: serial("id").primaryKey(),
+  serviceName: text("service_name").notNull(), // canva, adobe, figma, etc.
+  displayName: text("display_name").notNull(),
+  apiKey: text("api_key").notNull(),
+  serviceType: text("service_type").notNull(), // design, writing, video, audio
+  isActive: boolean("is_active").default(true),
+  lastUsed: timestamp("last_used"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const bulkUploads = pgTable("bulk_uploads", {
+  id: serial("id").primaryKey(),
+  fileName: text("file_name").notNull(),
+  fileType: text("file_type").notNull(), // zip, csv, json
+  status: text("status").notNull().default("processing"), // processing, completed, failed
+  totalItems: integer("total_items").notNull(),
+  processedItems: integer("processed_items").default(0),
+  failedItems: integer("failed_items").default(0),
+  uploadData: jsonb("upload_data"), // processed content data
+  errors: text("errors").array(),
+  createdAt: timestamp("created_at").defaultNow(),
+  completedAt: timestamp("completed_at"),
+});
+
+export const quickActions = pgTable("quick_actions", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  icon: text("icon").notNull(),
+  actionType: text("action_type").notNull(), // generate-post, create-story, make-video, etc.
+  parameters: jsonb("parameters"), // action-specific parameters
+  isCustom: boolean("is_custom").default(false),
+  usageCount: integer("usage_count").default(0),
+  lastUsed: timestamp("last_used"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertDiscoveryResultsSchema = createInsertSchema(discoveryResults).omit({
   id: true,
   timestamp: true,
+});
+
+export const insertContentTemplateSchema = createInsertSchema(contentTemplates).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertContentApiKeySchema = createInsertSchema(contentApiKeys).omit({
+  id: true,
+  lastUsed: true,
+  createdAt: true,
+});
+
+export const insertBulkUploadSchema = createInsertSchema(bulkUploads).omit({
+  id: true,
+  createdAt: true,
+  completedAt: true,
+});
+
+export const insertQuickActionSchema = createInsertSchema(quickActions).omit({
+  id: true,
+  lastUsed: true,
+  createdAt: true,
 });
 
 export type Agent = typeof agents.$inferSelect;
@@ -129,3 +206,11 @@ export type DiscoveryAgentConfig = typeof discoveryAgentConfig.$inferSelect;
 export type InsertDiscoveryAgentConfig = z.infer<typeof insertDiscoveryAgentConfigSchema>;
 export type DiscoveryResults = typeof discoveryResults.$inferSelect;
 export type InsertDiscoveryResults = z.infer<typeof insertDiscoveryResultsSchema>;
+export type ContentTemplate = typeof contentTemplates.$inferSelect;
+export type InsertContentTemplate = z.infer<typeof insertContentTemplateSchema>;
+export type ContentApiKey = typeof contentApiKeys.$inferSelect;
+export type InsertContentApiKey = z.infer<typeof insertContentApiKeySchema>;
+export type BulkUpload = typeof bulkUploads.$inferSelect;
+export type InsertBulkUpload = z.infer<typeof insertBulkUploadSchema>;
+export type QuickAction = typeof quickActions.$inferSelect;
+export type InsertQuickAction = z.infer<typeof insertQuickActionSchema>;

@@ -18,6 +18,10 @@ import ContentForgeSettings from "@/pages/agents/content-forge-settings";
 import ContentForgeControls from "@/pages/agents/content-forge-controls";
 import ContentForgeCreator from "@/pages/agents/content-forge-creator";
 import ContentForgeStock from "@/pages/agents/content-forge-stock";
+import ContentForgeQuickActions from "@/pages/agents/content-forge-quick-actions";
+import ContentForgeBulkUpload from "@/pages/agents/content-forge-bulk-upload";
+import ContentForgeTemplates from "@/pages/agents/content-forge-templates";
+import ContentForgeApiKeys from "@/pages/agents/content-forge-api-keys";
 import OutreachNexusAgent from "@/pages/agents/outreach-nexus-agent";
 import PerformanceOracle from "@/pages/agents/performance-oracle";
 import UGCCatalystAgent from "@/pages/agents/ugc-catalyst-agent";
@@ -43,6 +47,10 @@ function Router() {
       <Route path="/agents/content-forge/controls" component={ContentForgeControls} />
       <Route path="/agents/content-forge/creator" component={ContentForgeCreator} />
       <Route path="/agents/content-forge/stock" component={ContentForgeStock} />
+      <Route path="/agents/content-forge/quick-actions" component={ContentForgeQuickActions} />
+      <Route path="/agents/content-forge/bulk-upload" component={ContentForgeBulkUpload} />
+      <Route path="/agents/content-forge/templates" component={ContentForgeTemplates} />
+      <Route path="/agents/content-forge/api-keys" component={ContentForgeApiKeys} />
       <Route path="/agents/outreach-nexus" component={OutreachNexusAgent} />
       <Route path="/agents/performance-oracle" component={PerformanceOracle} />
       <Route path="/agents/ugc-catalyst" component={UGCCatalystAgent} />
