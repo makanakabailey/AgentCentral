@@ -52,6 +52,8 @@ The application defines several core entities:
 - **Activities**: Real-time activity feed with type categorization and agent association
 - **Database Stats**: Database table statistics including record counts and size tracking
 - **Performance Metrics**: Engagement rates, content quality scores, and response times
+- **Discovery Agent Config**: Business domain settings, geographical focus, analysis parameters, and optimization preferences
+- **Discovery Results**: Niche analysis results with viability scores, audience archetypes, and predictive metrics
 
 ### Frontend Components
 - **Dashboard**: Main dashboard with real-time metrics and agent overview with Performance Oracle styling
@@ -60,6 +62,11 @@ The application defines several core entities:
 - **Activity Feed**: Real-time activity streaming with categorized notifications
 - **Metrics Display**: System performance and database statistics visualization with gradient animations
 - **Navigation**: Seamless routing between dashboard and database management pages
+- **Discovery Agent Pages**: 
+  - Main agent dashboard with real-time status and controls
+  - AI Controls page with comprehensive configuration options and Google Maps location search
+  - Settings page with API configuration, performance tuning, and data management
+- **Location Search Component**: Google Maps-integrated location picker with smart predictions
 - **Responsive Design**: Mobile-first approach with desktop enhancements
 
 ### Storage Architecture

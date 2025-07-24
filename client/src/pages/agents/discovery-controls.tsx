@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import LocationSearch from "@/components/location-search";
 
 export default function DiscoveryControls() {
   const { toast } = useToast();
@@ -205,18 +206,15 @@ export default function DiscoveryControls() {
                   </div>
                   <div>
                     <Label htmlFor="geo">Geographical Focus</Label>
-                    <Select value={config.geographicalFocus} onValueChange={(value) => setConfig({...config, geographicalFocus: value})}>
-                      <SelectTrigger className="bg-dark-surface/50 border-dark-accent/30">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="global">Global</SelectItem>
-                        <SelectItem value="North America">North America</SelectItem>
-                        <SelectItem value="Europe">Europe</SelectItem>
-                        <SelectItem value="Asia Pacific">Asia Pacific</SelectItem>
-                        <SelectItem value="Latin America">Latin America</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <LocationSearch
+                      value={config.geographicalFocus}
+                      onChange={(location) => setConfig({...config, geographicalFocus: location})}
+                      placeholder="Search for countries, regions, or cities..."
+                      className="mt-2"
+                    />
+                    <p className="text-xs text-gray-400 mt-1">
+                      Search and select target markets using Google Maps integration
+                    </p>
                   </div>
                   <div>
                     <Label htmlFor="budget">Budget Threshold ($)</Label>
