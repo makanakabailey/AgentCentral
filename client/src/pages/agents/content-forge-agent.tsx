@@ -1,407 +1,317 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "@/lib/api";
-import { Hammer, ArrowLeft, FileText, Image, Video, Zap, Brain, Settings, Play, Download, Upload } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { 
+  Hammer, 
+  ArrowLeft, 
+  Settings, 
+  Wand2, 
+  Archive, 
+  Plus,
+  TrendingUp,
+  BarChart3,
+  Target,
+  Sparkles,
+  Eye,
+  Edit3,
+  Activity
+} from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
+import type { Agent, ContentTemplate, GeneratedContent } from "@shared/schema";
 
 export default function ContentForgeAgent() {
   const { toast } = useToast();
 
-  const { data: agents } = useQuery({
+  // Queries
+  const { data: agents } = useQuery<Agent[]>({
     queryKey: ["/api/agents"],
-    queryFn: api.getAgents,
     refetchInterval: 30000,
+  });
+
+  const { data: templates = [] } = useQuery<ContentTemplate[]>({
+    queryKey: ["/api/content/templates"],
+  });
+
+  const { data: generatedContent = [] } = useQuery<GeneratedContent[]>({
+    queryKey: ["/api/content/generated"],
   });
 
   const contentForgeAgent = agents?.find(agent => agent.name === "Content Forge Agent");
 
-  const handleGenerateContent = () => {
-    toast({
-      title: "Content Generation Started",
-      description: "Content Forge Agent is creating optimized content across all platforms.",
-    });
-  };
+  const recentContent = generatedContent
+    .sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime())
+    .slice(0, 5);
 
-  const handleOptimizeContent = () => {
-    toast({
-      title: "Content Optimization",
-      description: "AI is optimizing existing content for better engagement and performance.",
-    });
-  };
+  const avgViralityScore = templates.length > 0 
+    ? Math.round(templates.reduce((sum, t) => sum + (t.viralityScore || 0), 0) / templates.length)
+    : 0;
+
+  const publishedCount = generatedContent.filter(c => c.status === "published").length;
+  const draftCount = generatedContent.filter(c => c.status === "draft").length;
 
   return (
-    <div className="min-h-screen neural-bg relative bg-dark-primary">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a12] via-[#1a1a2e] to-[#16213e] text-white">
       {/* Header */}
-      <header className="bg-dark-secondary/80 backdrop-blur-lg border-b border-dark-accent/20 px-4 lg:px-6 py-4">
+      <header className="bg-black/40 backdrop-blur-lg border-b border-gray-800 px-4 lg:px-6 py-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3">
             <Link href="/dashboard">
-              <button className="p-2 rounded-lg bg-dark-surface/50 hover:bg-dark-surface transition-colors text-gray-400 hover:text-white">
-                <ArrowLeft className="w-5 h-5" />
-              </button>
+              <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back
+              </Button>
             </Link>
-            <div className="p-3 rounded-lg bg-dark-accent/20">
-              <Hammer className="w-6 h-6 text-dark-accent" />
+            <div className="p-2 bg-gradient-to-r from-[#00ff9d] to-[#00cc7a] rounded-lg">
+              <Hammer className="h-6 w-6 text-black" />
             </div>
             <div>
-              <h1 className="text-xl lg:text-2xl font-bold gradient-text">CONTENT FORGE AGENT</h1>
-              <p className="text-sm text-gray-400">AI Content Creation Engine</p>
+              <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-[#00ff9d] to-white bg-clip-text text-transparent">
+                Content Forge Agent
+              </h1>
+              <p className="text-sm text-gray-400">AI-Powered Content Creation & Optimization Engine</p>
             </div>
           </div>
           
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-dark-accent animate-pulse"></div>
+              <div className={`w-2 h-2 rounded-full ${contentForgeAgent?.isActive ? 'bg-[#00ff9d]' : 'bg-gray-500'} animate-pulse`}></div>
               <span className="text-xs text-gray-400">
-                {contentForgeAgent?.isActive ? "Creating" : "Standby"}
+                {contentForgeAgent?.isActive ? "Active" : "Standby"}
               </span>
             </div>
             
-            <button
-              onClick={handleOptimizeContent}
-              className="p-2 lg:p-3 rounded-lg bg-dark-accent/10 hover:bg-dark-accent/20 transition-colors"
-            >
-              <Brain className="w-4 h-4 lg:w-5 lg:h-5 text-dark-accent" />
-            </button>
-            
-            <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
-              <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
-            </button>
+            <Link href="/agents/content-forge/settings">
+              <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:border-[#00ff9d]/50">
+                <Settings className="h-4 w-4 mr-2" />
+                Settings
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
 
       <div className="p-4 lg:p-6 space-y-6">
-        
-        {/* Content Metrics Overview */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-          <div className="holographic rounded-xl p-4 lg:p-6 group hover:scale-105 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-2 lg:p-3 rounded-lg bg-dark-accent/10">
-                <FileText className="w-5 h-5 lg:w-6 lg:h-6 text-dark-accent" />
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-dark-accent animate-pulse"></div>
-                <span className="text-xs text-gray-400">Active</span>
-              </div>
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs lg:text-sm text-gray-400 font-medium">Content Created</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl lg:text-3xl font-bold text-white gradient-text metric-glow">1.2K</span>
-                <span className="text-sm lg:text-base text-gray-400 font-medium">pieces</span>
-              </div>
-            </div>
-          </div>
+        {/* Action Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Link href="/agents/content-forge/create">
+            <Card className="bg-black/40 border-gray-800 backdrop-blur-sm hover:border-[#00ff9d]/50 transition-colors cursor-pointer">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-gradient-to-r from-[#00ff9d] to-[#00cc7a] rounded-lg">
+                    <Wand2 className="h-6 w-6 text-black" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-[#00ff9d]">Create Content</h3>
+                    <p className="text-sm text-gray-400">Generate new content using AI templates</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
 
-          <div className="holographic rounded-xl p-4 lg:p-6 group hover:scale-105 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-2 lg:p-3 rounded-lg bg-dark-accent2/10">
-                <Zap className="w-5 h-5 lg:w-6 lg:h-6 text-dark-accent2" />
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-dark-accent2 animate-pulse"></div>
-                <span className="text-xs text-gray-400">Live</span>
-              </div>
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs lg:text-sm text-gray-400 font-medium">Engagement Rate</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl lg:text-3xl font-bold text-white gradient-text info-glow">87%</span>
-                <span className="text-sm lg:text-base text-gray-400 font-medium">avg</span>
-              </div>
-            </div>
-          </div>
+          <Link href="/agents/content-forge/library">
+            <Card className="bg-black/40 border-gray-800 backdrop-blur-sm hover:border-[#00ff9d]/50 transition-colors cursor-pointer">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg">
+                    <Archive className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-blue-400">Content Library</h3>
+                    <p className="text-sm text-gray-400">Manage and organize generated content</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
 
-          <div className="holographic rounded-xl p-4 lg:p-6 group hover:scale-105 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-2 lg:p-3 rounded-lg bg-dark-accent/10">
-                <Image className="w-5 h-5 lg:w-6 lg:h-6 text-dark-accent" />
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-dark-accent animate-pulse"></div>
-                <span className="text-xs text-gray-400">Creating</span>
-              </div>
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs lg:text-sm text-gray-400 font-medium">Visual Content</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl lg:text-3xl font-bold text-white gradient-text metric-glow">423</span>
-                <span className="text-sm lg:text-base text-gray-400 font-medium">assets</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="holographic rounded-xl p-4 lg:p-6 group hover:scale-105 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-2 lg:p-3 rounded-lg bg-dark-accent2/10">
-                <Video className="w-5 h-5 lg:w-6 lg:h-6 text-dark-accent2" />
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-dark-accent2 animate-pulse"></div>
-                <span className="text-xs text-gray-400">Processing</span>
-              </div>
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs lg:text-sm text-gray-400 font-medium">Video Content</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl lg:text-3xl font-bold text-white gradient-text info-glow">156</span>
-                <span className="text-sm lg:text-base text-gray-400 font-medium">videos</span>
-              </div>
-            </div>
-          </div>
+          <Link href="/agents/content-forge/settings">
+            <Card className="bg-black/40 border-gray-800 backdrop-blur-sm hover:border-[#00ff9d]/50 transition-colors cursor-pointer">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg">
+                    <Settings className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-purple-400">Settings</h3>
+                    <p className="text-sm text-gray-400">Configure templates and preferences</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
-          {/* Content Pipeline */}
-          <div className="lg:col-span-2 holographic rounded-xl p-4 lg:p-6 group hover:scale-105 transition-all duration-300">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl lg:text-2xl font-bold text-white">Active Content Pipeline</h3>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleGenerateContent}
-                  className="p-2 rounded-lg bg-dark-accent/10 hover:bg-dark-accent/20 transition-colors"
-                >
-                  <Play className="w-4 h-4 text-dark-accent" />
-                </button>
-                <button className="p-2 rounded-lg bg-dark-surface/50 hover:bg-dark-surface transition-colors">
-                  <Download className="w-4 h-4 text-gray-400" />
-                </button>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              {[
-                { title: "AI SaaS Product Launch Campaign", type: "Multi-Platform", progress: 95, platform: "LinkedIn + Twitter + Blog", status: "Finalizing" },
-                { title: "Tech Trends Analysis Series", type: "Blog + Video", progress: 78, platform: "Blog + YouTube", status: "Writing" },
-                { title: "Customer Success Stories", type: "Case Studies", progress: 67, platform: "Website + Email", status: "Reviewing" },
-                { title: "Product Feature Deep-Dive", type: "Video Series", progress: 89, platform: "YouTube + Social", status: "Editing" },
-                { title: "Industry Thought Leadership", type: "Articles", progress: 56, platform: "Medium + LinkedIn", status: "Research" },
-              ].map((content, index) => (
-                <div key={index} className="bg-dark-surface/30 rounded-lg p-4 border border-dark-accent/10 hover:border-dark-accent/30 transition-colors">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-base font-semibold text-white">{content.title}</h4>
-                        <span className="px-2 py-1 bg-dark-accent/20 text-dark-accent text-xs rounded-full">
-                          {content.status}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-400">
-                        <span>Type: {content.type}</span>
-                        <span className="text-dark-accent">Platform: {content.platform}</span>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold text-white gradient-text">{content.progress}%</div>
-                      <div className="text-xs text-gray-400">Complete</div>
-                    </div>
-                  </div>
-                  
-                  <div className="w-full bg-dark-primary rounded-full h-2">
-                    <div 
-                      className="h-2 rounded-full bg-gradient-to-r from-dark-accent to-dark-accent2 transition-all duration-1000"
-                      style={{ width: `${content.progress}%` }}
-                    ></div>
-                  </div>
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-400">Templates</p>
+                  <p className="text-2xl font-bold text-[#00ff9d]">{templates.length}</p>
                 </div>
-              ))}
-            </div>
-            
-            <div className="mt-6 h-1 bg-dark-primary rounded-full overflow-hidden">
-              <div className="animation-line bg-dark-accent"></div>
-            </div>
-          </div>
+                <Target className="h-8 w-8 text-[#00ff9d]/60" />
+              </div>
+            </CardContent>
+          </Card>
 
-          {/* Control Panel */}
-          <div className="space-y-6">
-            
-            {/* Content Controls */}
-            <div className="holographic rounded-xl p-4 lg:p-6 group hover:scale-105 transition-all duration-300">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 rounded-lg bg-dark-accent2/20">
-                  <Brain className="w-6 h-6 text-dark-accent2" />
+          <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-400">Generated</p>
+                  <p className="text-2xl font-bold text-blue-400">{generatedContent.length}</p>
                 </div>
-                <h3 className="text-xl font-bold text-white">Forge Controls</h3>
+                <Sparkles className="h-8 w-8 text-blue-400/60" />
               </div>
-              <div className="space-y-3">
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <FileText className="w-4 h-4 text-dark-accent" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Generate Articles</p>
-                      <p className="text-xs text-gray-400">AI-powered blog content</p>
-                    </div>
-                  </div>
-                </button>
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Image className="w-4 h-4 text-dark-accent" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Create Visuals</p>
-                      <p className="text-xs text-gray-400">Graphics & infographics</p>
-                    </div>
-                  </div>
-                </button>
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Video className="w-4 h-4 text-dark-accent" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Video Production</p>
-                      <p className="text-xs text-gray-400">Automated video creation</p>
-                    </div>
-                  </div>
-                </button>
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Upload className="w-4 h-4 text-dark-accent" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Bulk Upload</p>
-                      <p className="text-xs text-gray-400">Multi-platform publishing</p>
-                    </div>
-                  </div>
-                </button>
-              </div>
-            </div>
+            </CardContent>
+          </Card>
 
-            {/* Performance Metrics */}
-            <div className="holographic rounded-xl p-4 lg:p-6 group hover:scale-105 transition-all duration-300">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 rounded-lg bg-dark-accent/20">
-                  <Zap className="w-6 h-6 text-dark-accent" />
+          <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-400">Published</p>
+                  <p className="text-2xl font-bold text-green-400">{publishedCount}</p>
                 </div>
-                <h3 className="text-xl font-bold text-white">Performance</h3>
+                <Eye className="h-8 w-8 text-green-400/60" />
               </div>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-sm text-gray-400">Content Quality</span>
-                    <span className="text-sm text-dark-accent font-medium">96.4%</span>
-                  </div>
-                  <div className="w-full bg-dark-primary rounded-full h-2">
-                    <div className="h-2 rounded-full bg-gradient-to-r from-dark-accent to-dark-accent2 w-[96%] transition-all duration-1000"></div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-sm text-gray-400">Generation Speed</span>
-                    <span className="text-sm text-dark-accent2 font-medium">3.2s avg</span>
-                  </div>
-                  <div className="w-full bg-dark-primary rounded-full h-2">
-                    <div className="h-2 rounded-full bg-gradient-to-r from-dark-accent2 to-dark-accent w-[88%] transition-all duration-1000"></div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-sm text-gray-400">Optimization Rate</span>
-                    <span className="text-sm text-dark-accent font-medium">94.7%</span>
-                  </div>
-                  <div className="w-full bg-dark-primary rounded-full h-2">
-                    <div className="h-2 rounded-full bg-gradient-to-r from-dark-accent to-dark-accent2 w-[95%] transition-all duration-1000"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </CardContent>
+          </Card>
 
-          </div>
+          <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-400">Avg Virality</p>
+                  <p className="text-2xl font-bold text-purple-400">{avgViralityScore}%</p>
+                </div>
+                <TrendingUp className="h-8 w-8 text-purple-400/60" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Content Analytics & Recent Activity */}
+        {/* Agent Status and Recent Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          
-          {/* Platform Performance */}
-          <div className="holographic rounded-xl p-4 lg:p-6 group hover:scale-105 transition-all duration-300">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl lg:text-2xl font-bold text-white">Platform Performance</h3>
-            </div>
-            
-            <div className="space-y-4">
-              {[
-                { platform: "LinkedIn", posts: 287, engagement: 94, reach: "45K" },
-                { platform: "Twitter", posts: 456, engagement: 82, reach: "78K" },
-                { platform: "YouTube", posts: 34, engagement: 89, reach: "125K" },
-                { platform: "Blog", posts: 67, engagement: 91, reach: "23K" },
-                { platform: "Instagram", posts: 198, engagement: 76, reach: "34K" },
-              ].map((platform, index) => (
-                <div key={index} className="bg-dark-surface/30 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-white">{platform.platform}</span>
-                    <span className="text-sm text-dark-accent font-medium">{platform.engagement}%</span>
-                  </div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-gray-400">{platform.posts} posts • {platform.reach} reach</span>
-                  </div>
-                  <div className="w-full bg-dark-primary rounded-full h-2">
-                    <div 
-                      className="h-2 rounded-full bg-gradient-to-r from-dark-accent to-dark-accent2 transition-all duration-1000"
-                      style={{ width: `${platform.engagement}%` }}
-                    ></div>
-                  </div>
+          {/* Agent Status */}
+          <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-[#00ff9d]">Agent Status</CardTitle>
+              <CardDescription>Current performance and activity metrics</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-400">Status</span>
+                <Badge variant="secondary" className={contentForgeAgent?.isActive ? "bg-green-500" : "bg-gray-500"}>
+                  {contentForgeAgent?.isActive ? "Active" : "Standby"}
+                </Badge>
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-400">Tasks Completed</span>
+                  <span className="text-sm font-semibold">{contentForgeAgent?.tasksCompleted || 0}</span>
                 </div>
-              ))}
-            </div>
-          </div>
+                <Progress value={((contentForgeAgent?.tasksCompleted || 0) / 200) * 100} className="h-2" />
+              </div>
 
-          {/* Recent Forge Activity */}
-          <div className="holographic rounded-xl p-4 lg:p-6 group hover:scale-105 transition-all duration-300">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl lg:text-2xl font-bold text-white">Forge Activity</h3>
-            </div>
-            
-            <div className="space-y-4">
-              {[
-                { time: "2 min ago", action: "Generated LinkedIn article: 'AI Trends 2024'", type: "Article" },
-                { time: "8 min ago", action: "Created video script for product demo", type: "Video" },
-                { time: "15 min ago", action: "Optimized 12 social media posts for engagement", type: "Social" },
-                { time: "23 min ago", action: "Generated infographic: 'SaaS Growth Stats'", type: "Visual" },
-                { time: "31 min ago", action: "Created email campaign content series", type: "Email" },
-              ].map((activity, index) => (
-                <div key={index} className="bg-dark-surface/30 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-gray-400">{activity.time}</span>
-                    <span className="px-2 py-1 bg-dark-accent/20 text-dark-accent text-xs rounded-full">
-                      {activity.type}
-                    </span>
-                  </div>
-                  <p className="text-sm text-white">{activity.action}</p>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-400">Content Quality</span>
+                  <span className="text-sm font-semibold">{avgViralityScore}%</span>
                 </div>
-              ))}
-            </div>
-          </div>
+                <Progress value={avgViralityScore} className="h-2" />
+              </div>
+
+              <div className="pt-4 border-t border-gray-700">
+                <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <Activity className="h-3 w-3" />
+                  <span>Last activity: {contentForgeAgent?.lastActivity ? new Date(contentForgeAgent.lastActivity).toLocaleString() : 'Never'}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Recent Content */}
+          <Card className="bg-black/40 border-gray-800 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-[#00ff9d]">Recent Content</CardTitle>
+              <CardDescription>Latest generated content pieces</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {recentContent.length > 0 ? (
+                <div className="space-y-3">
+                  {recentContent.map((content) => (
+                    <div key={content.id} className="p-3 bg-gray-900/50 rounded-lg border border-gray-700">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-sm">{getPlatformIcon(content.platform)}</span>
+                            <h4 className="text-sm font-semibold line-clamp-1">{content.title}</h4>
+                          </div>
+                          <p className="text-xs text-gray-400 line-clamp-2">{content.content}</p>
+                          <div className="flex items-center gap-3 mt-2">
+                            <div className="flex items-center gap-1">
+                              <TrendingUp className="h-3 w-3 text-green-400" />
+                              <span className="text-xs text-gray-400">{content.viralityPrediction}%</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <BarChart3 className="h-3 w-3 text-blue-400" />
+                              <span className="text-xs text-gray-400">{content.engagementPrediction}%</span>
+                            </div>
+                          </div>
+                        </div>
+                        <Badge variant="secondary" className={`ml-2 ${getStatusColor(content.status)} text-white text-xs`}>
+                          {content.status}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8 text-gray-500">
+                  <Sparkles className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">No content generated yet</p>
+                  <Link href="/agents/content-forge/create">
+                    <Button size="sm" className="mt-2 bg-gradient-to-r from-[#00ff9d] to-[#00cc7a] text-black hover:opacity-90">
+                      <Plus className="h-3 w-3 mr-1" />
+                      Create Content
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
-
       </div>
-
-      {/* Status Bar */}
-      <footer className="bg-dark-secondary/80 backdrop-blur-lg border-t border-dark-accent/20 px-4 lg:px-6 py-2">
-        <div className="flex items-center justify-between text-xs text-gray-400">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-dark-accent animate-pulse"></div>
-              <span>Content Forge: Creating</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FileText className="w-3 h-3 text-dark-accent" />
-              <span>Content: 1.2K pieces</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Zap className="w-3 h-3 text-dark-accent" />
-              <span>Engagement: 87% avg</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Image className="w-3 h-3 text-dark-accent" />
-              <span>Visuals: 423 assets</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <span>Tasks Completed: {contentForgeAgent?.tasksCompleted || 0}</span>
-            <span>AI Engine: v3.1</span>
-          </div>
-        </div>
-      </footer>
-
     </div>
   );
 }
+
+// Helper functions
+const getPlatformIcon = (platform: string) => {
+  const icons: { [key: string]: string } = {
+    tiktok: "🎵",
+    instagram: "📸",
+    linkedin: "💼",
+    twitter: "🐦",
+    youtube: "📹",
+    blog: "📝",
+  };
+  return icons[platform] || "📄";
+};
+
+const getStatusColor = (status: string) => {
+  const colors: { [key: string]: string } = {
+    draft: "bg-yellow-500",
+    approved: "bg-green-500",
+    published: "bg-blue-500",
+    archived: "bg-gray-500",
+  };
+  return colors[status] || "bg-gray-500";
+};
