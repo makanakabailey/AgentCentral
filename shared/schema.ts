@@ -115,85 +115,6 @@ export const insertDiscoveryResultsSchema = createInsertSchema(discoveryResults)
   timestamp: true,
 });
 
-// Content Forge Agent schemas
-export const contentTemplates = pgTable("content_templates", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  type: text("type").notNull(), // tiktok, linkedin, twitter, instagram, blog, email
-  category: text("category").notNull(), // educational, promotional, viral, testimonial
-  prompt: text("prompt").notNull(),
-  structure: jsonb("structure"), // platform-specific structure template
-  variables: text("variables").array(), // dynamic variables in the template
-  viralityScore: integer("virality_score").default(0), // predicted virality score
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
-});
-
-export const generatedContent = pgTable("generated_content", {
-  id: serial("id").primaryKey(),
-  templateId: integer("template_id").references(() => contentTemplates.id),
-  title: text("title").notNull(),
-  content: text("content").notNull(),
-  platform: text("platform").notNull(),
-  contentType: text("content_type").notNull(), // video, image, text, carousel
-  status: text("status").notNull().default("draft"), // draft, approved, published, archived
-  viralityPrediction: integer("virality_prediction").default(0),
-  engagementPrediction: integer("engagement_prediction").default(0),
-  metadata: jsonb("metadata"), // platform-specific metadata
-  assets: text("assets").array(), // links to generated assets
-  scheduledFor: timestamp("scheduled_for"),
-  publishedAt: timestamp("published_at"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
-});
-
-export const contentPillars = pgTable("content_pillars", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  targetAudience: text("target_audience").notNull(),
-  keyTopics: text("key_topics").array(),
-  contentTypes: text("content_types").array(),
-  performanceWeight: integer("performance_weight").default(100), // 0-100
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const contentCalendar = pgTable("content_calendar", {
-  id: serial("id").primaryKey(),
-  contentId: integer("content_id").references(() => generatedContent.id),
-  pillarId: integer("pillar_id").references(() => contentPillars.id),
-  platform: text("platform").notNull(),
-  scheduledDate: timestamp("scheduled_date").notNull(),
-  peakTime: text("peak_time"), // optimal posting time
-  status: text("status").notNull().default("scheduled"), // scheduled, posted, failed
-  notes: text("notes"),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const insertContentTemplateSchema = createInsertSchema(contentTemplates).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const insertGeneratedContentSchema = createInsertSchema(generatedContent).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const insertContentPillarSchema = createInsertSchema(contentPillars).omit({
-  id: true,
-  createdAt: true,
-});
-
-export const insertContentCalendarSchema = createInsertSchema(contentCalendar).omit({
-  id: true,
-  createdAt: true,
-});
-
 export type Agent = typeof agents.$inferSelect;
 export type InsertAgent = z.infer<typeof insertAgentSchema>;
 export type SystemMetrics = typeof systemMetrics.$inferSelect;
@@ -208,11 +129,3 @@ export type DiscoveryAgentConfig = typeof discoveryAgentConfig.$inferSelect;
 export type InsertDiscoveryAgentConfig = z.infer<typeof insertDiscoveryAgentConfigSchema>;
 export type DiscoveryResults = typeof discoveryResults.$inferSelect;
 export type InsertDiscoveryResults = z.infer<typeof insertDiscoveryResultsSchema>;
-export type ContentTemplate = typeof contentTemplates.$inferSelect;
-export type InsertContentTemplate = z.infer<typeof insertContentTemplateSchema>;
-export type GeneratedContent = typeof generatedContent.$inferSelect;
-export type InsertGeneratedContent = z.infer<typeof insertGeneratedContentSchema>;
-export type ContentPillar = typeof contentPillars.$inferSelect;
-export type InsertContentPillar = z.infer<typeof insertContentPillarSchema>;
-export type ContentCalendar = typeof contentCalendar.$inferSelect;
-export type InsertContentCalendar = z.infer<typeof insertContentCalendarSchema>;
