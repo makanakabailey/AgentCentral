@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { Search, ArrowLeft, Target, Users, TrendingUp, Database, Brain, Settings, Play, Pause, RefreshCw } from "lucide-react";
+import { Search, ArrowLeft, Target, Users, TrendingUp, Database, Brain, Settings, Play, Pause, RefreshCw, Sliders } from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 
@@ -64,9 +64,17 @@ export default function DiscoveryAgent() {
               <Brain className="w-4 h-4 lg:w-5 lg:h-5 text-dark-accent" />
             </button>
             
-            <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
-              <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
-            </button>
+            <Link href="/agents/discovery/controls">
+              <button className="p-2 lg:p-3 rounded-lg bg-dark-accent/10 hover:bg-dark-accent/20 transition-colors">
+                <Sliders className="w-4 h-4 lg:w-5 lg:h-5 text-dark-accent" />
+              </button>
+            </Link>
+            
+            <Link href="/agents/discovery/settings">
+              <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
+                <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
+              </button>
+            </Link>
           </div>
         </div>
       </header>

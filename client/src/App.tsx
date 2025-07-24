@@ -7,6 +7,8 @@ import Dashboard from "@/pages/dashboard";
 import DatabaseManagement from "@/pages/database";
 import SettingsPage from "@/pages/settings";
 import DiscoveryAgent from "@/pages/agents/discovery-agent";
+import DiscoveryControls from "@/pages/agents/discovery-controls";
+import DiscoverySettings from "@/pages/agents/discovery-settings";
 import LeadScoutAgent from "@/pages/agents/lead-scout-agent";
 import ContentForgeAgent from "@/pages/agents/content-forge-agent";
 import OutreachNexusAgent from "@/pages/agents/outreach-nexus-agent";
@@ -23,6 +25,8 @@ function Router() {
       <Route path="/database" component={DatabaseManagement} />
       <Route path="/settings" component={SettingsPage} />
       <Route path="/agents/discovery" component={DiscoveryAgent} />
+      <Route path="/agents/discovery/controls" component={DiscoveryControls} />
+      <Route path="/agents/discovery/settings" component={DiscoverySettings} />
       <Route path="/agents/lead-scout" component={LeadScoutAgent} />
       <Route path="/agents/content-forge" component={ContentForgeAgent} />
       <Route path="/agents/outreach-nexus" component={OutreachNexusAgent} />

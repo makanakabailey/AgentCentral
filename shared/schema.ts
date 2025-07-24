@@ -51,6 +51,35 @@ export const performanceMetrics = pgTable("performance_metrics", {
   trendData: jsonb("trend_data"), // array of numbers for sparkline
 });
 
+export const discoveryAgentConfig = pgTable("discovery_agent_config", {
+  id: serial("id").primaryKey(),
+  businessDomain: text("business_domain").notNull(),
+  geographicalFocus: text("geographical_focus"),
+  budgetThreshold: integer("budget_threshold"),
+  excludedTopics: text("excluded_topics").array(),
+  excludedCompetitors: text("excluded_competitors").array(),
+  analysisDepth: text("analysis_depth").notNull().default("standard"), // basic, standard, deep
+  dataSourcePreferences: jsonb("data_source_preferences"), // API preferences and weights
+  alertThresholds: jsonb("alert_thresholds"), // NVS thresholds, volatility limits
+  autoOptimization: boolean("auto_optimization").default(true),
+  lastUpdated: timestamp("last_updated").defaultNow(),
+});
+
+export const discoveryResults = pgTable("discovery_results", {
+  id: serial("id").primaryKey(),
+  nicheName: text("niche_name").notNull(),
+  nicheViabilityScore: integer("niche_viability_score").notNull(), // NVS * 100
+  searchMomentum: integer("search_momentum").notNull(),
+  engagementDensity: integer("engagement_density").notNull(),
+  monetizationIndex: integer("monetization_index").notNull(),
+  competitionSaturation: integer("competition_saturation").notNull(),
+  riskFactors: text("risk_factors").array(),
+  audienceArchetypes: jsonb("audience_archetypes"), // array of persona objects
+  predictedLifespan: integer("predicted_lifespan"), // days
+  timestamp: timestamp("timestamp").defaultNow(),
+  isActive: boolean("is_active").default(true),
+});
+
 export const insertAgentSchema = createInsertSchema(agents).omit({
   id: true,
   lastActivity: true,
@@ -76,6 +105,16 @@ export const insertPerformanceMetricsSchema = createInsertSchema(performanceMetr
   timestamp: true,
 });
 
+export const insertDiscoveryAgentConfigSchema = createInsertSchema(discoveryAgentConfig).omit({
+  id: true,
+  lastUpdated: true,
+});
+
+export const insertDiscoveryResultsSchema = createInsertSchema(discoveryResults).omit({
+  id: true,
+  timestamp: true,
+});
+
 export type Agent = typeof agents.$inferSelect;
 export type InsertAgent = z.infer<typeof insertAgentSchema>;
 export type SystemMetrics = typeof systemMetrics.$inferSelect;
@@ -86,3 +125,7 @@ export type DatabaseStats = typeof databaseStats.$inferSelect;
 export type InsertDatabaseStats = z.infer<typeof insertDatabaseStatsSchema>;
 export type PerformanceMetrics = typeof performanceMetrics.$inferSelect;
 export type InsertPerformanceMetrics = z.infer<typeof insertPerformanceMetricsSchema>;
+export type DiscoveryAgentConfig = typeof discoveryAgentConfig.$inferSelect;
+export type InsertDiscoveryAgentConfig = z.infer<typeof insertDiscoveryAgentConfigSchema>;
+export type DiscoveryResults = typeof discoveryResults.$inferSelect;
+export type InsertDiscoveryResults = z.infer<typeof insertDiscoveryResultsSchema>;
