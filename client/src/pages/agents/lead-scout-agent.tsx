@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { Search, ArrowLeft, Users, Target, TrendingUp, Zap, Brain, Settings, Play, Filter, Download } from "lucide-react";
+import { Search, ArrowLeft, Users, Target, TrendingUp, Zap, Brain, Settings, Play, Filter, Download, Sliders, Eye } from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 
@@ -72,6 +72,51 @@ export default function LeadScoutAgent() {
       </header>
 
       <div className="p-4 lg:p-6 space-y-6">
+        
+        {/* Navigation Buttons */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <Link href="/agents/lead-scout/controls">
+            <div className="holographic rounded-xl p-6 group hover:scale-105 transition-all duration-300 cursor-pointer">
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-lg bg-blue-500/20">
+                  <Sliders className="w-6 h-6 text-blue-400" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-white">Controls</h3>
+                  <p className="text-sm text-gray-400">Configure lead extraction parameters</p>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/agents/lead-scout/settings">
+            <div className="holographic rounded-xl p-6 group hover:scale-105 transition-all duration-300 cursor-pointer">
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-lg bg-purple-500/20">
+                  <Settings className="w-6 h-6 text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-white">Settings</h3>
+                  <p className="text-sm text-gray-400">API keys and performance tuning</p>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/agents/lead-scout/leads">
+            <div className="holographic rounded-xl p-6 group hover:scale-105 transition-all duration-300 cursor-pointer">
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-lg bg-green-500/20">
+                  <Eye className="w-6 h-6 text-green-400" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-white">View Leads</h3>
+                  <p className="text-sm text-gray-400">Browse and export lead database</p>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </div>
         
         {/* Lead Metrics Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">

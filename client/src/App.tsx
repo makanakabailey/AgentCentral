@@ -10,6 +10,9 @@ import DiscoveryAgent from "@/pages/agents/discovery-agent";
 import DiscoveryControls from "@/pages/agents/discovery-controls";
 import DiscoverySettings from "@/pages/agents/discovery-settings";
 import LeadScoutAgent from "@/pages/agents/lead-scout-agent";
+import LeadScoutControls from "@/pages/agents/lead-scout-controls";
+import LeadScoutSettings from "@/pages/agents/lead-scout-settings";
+import LeadScoutLeads from "@/pages/agents/lead-scout-leads";
 import ContentForgeAgent from "@/pages/agents/content-forge-agent";
 import OutreachNexusAgent from "@/pages/agents/outreach-nexus-agent";
 import PerformanceOracle from "@/pages/agents/performance-oracle";
@@ -28,6 +31,9 @@ function Router() {
       <Route path="/agents/discovery/controls" component={DiscoveryControls} />
       <Route path="/agents/discovery/settings" component={DiscoverySettings} />
       <Route path="/agents/lead-scout" component={LeadScoutAgent} />
+      <Route path="/agents/lead-scout/controls" component={LeadScoutControls} />
+      <Route path="/agents/lead-scout/settings" component={LeadScoutSettings} />
+      <Route path="/agents/lead-scout/leads" component={LeadScoutLeads} />
       <Route path="/agents/content-forge" component={ContentForgeAgent} />
       <Route path="/agents/outreach-nexus" component={OutreachNexusAgent} />
       <Route path="/agents/performance-oracle" component={PerformanceOracle} />
