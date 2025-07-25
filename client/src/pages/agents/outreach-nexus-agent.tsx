@@ -268,15 +268,17 @@ export default function OutreachNexusAgent() {
                     </div>
                   </button>
                 </Link>
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Users className="w-4 h-4 text-dark-accent2" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Audience Targeting</p>
-                      <p className="text-xs text-gray-400">Personalization engine</p>
+                <Link href="/agents/outreach-nexus/audience">
+                  <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Users className="w-4 h-4 text-dark-accent2" />
+                      <div>
+                        <p className="text-sm font-medium text-white">Audience Targeting</p>
+                        <p className="text-xs text-gray-400">Account linking & personalization engine</p>
+                      </div>
                     </div>
-                  </div>
-                </button>
+                  </button>
+                </Link>
               </div>
             </div>
 

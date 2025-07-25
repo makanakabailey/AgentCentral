@@ -163,6 +163,52 @@ export const quickActions = pgTable("quick_actions", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const connectedAccounts = pgTable("connected_accounts", {
+  id: serial("id").primaryKey(),
+  platform: text("platform").notNull(), // linkedin, twitter, email, phone, instagram, facebook
+  accountName: text("account_name").notNull(),
+  accountId: text("account_id"), // platform-specific ID
+  accessToken: text("access_token"), // encrypted token
+  refreshToken: text("refresh_token"), // encrypted refresh token
+  isActive: boolean("is_active").default(true),
+  lastSync: timestamp("last_sync"),
+  permissions: text("permissions").array(), // read, write, message, etc.
+  profileData: jsonb("profile_data"), // profile info, followers, etc.
+  createdAt: timestamp("created_at").defaultNow(),
+  expiresAt: timestamp("expires_at"),
+});
+
+export const audienceSegments = pgTable("audience_segments", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description"),
+  criteria: jsonb("criteria").notNull(), // filtering criteria
+  estimatedSize: integer("estimated_size"),
+  platforms: text("platforms").array(), // which platforms this segment applies to
+  tags: text("tags").array(),
+  isActive: boolean("is_active").default(true),
+  lastUpdated: timestamp("last_updated").defaultNow(),
+  createdBy: text("created_by").notNull(),
+});
+
+export const outreachCampaigns = pgTable("outreach_campaigns", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description"),
+  audienceSegmentId: integer("audience_segment_id").references(() => audienceSegments.id),
+  platforms: text("platforms").array().notNull(),
+  messageTemplates: jsonb("message_templates"), // platform-specific templates
+  status: text("status").notNull().default("draft"), // draft, active, paused, completed
+  startDate: timestamp("start_date"),
+  endDate: timestamp("end_date"),
+  targetCount: integer("target_count"),
+  sentCount: integer("sent_count").default(0),
+  responseCount: integer("response_count").default(0),
+  settings: jsonb("settings"), // campaign-specific settings
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 export const insertDiscoveryResultsSchema = createInsertSchema(discoveryResults).omit({
   id: true,
   timestamp: true,
@@ -192,6 +238,23 @@ export const insertQuickActionSchema = createInsertSchema(quickActions).omit({
   createdAt: true,
 });
 
+export const insertConnectedAccountSchema = createInsertSchema(connectedAccounts).omit({
+  id: true,
+  lastSync: true,
+  createdAt: true,
+});
+
+export const insertAudienceSegmentSchema = createInsertSchema(audienceSegments).omit({
+  id: true,
+  lastUpdated: true,
+});
+
+export const insertOutreachCampaignSchema = createInsertSchema(outreachCampaigns).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type Agent = typeof agents.$inferSelect;
 export type InsertAgent = z.infer<typeof insertAgentSchema>;
 export type SystemMetrics = typeof systemMetrics.$inferSelect;
@@ -214,3 +277,9 @@ export type BulkUpload = typeof bulkUploads.$inferSelect;
 export type InsertBulkUpload = z.infer<typeof insertBulkUploadSchema>;
 export type QuickAction = typeof quickActions.$inferSelect;
 export type InsertQuickAction = z.infer<typeof insertQuickActionSchema>;
+export type ConnectedAccount = typeof connectedAccounts.$inferSelect;
+export type InsertConnectedAccount = z.infer<typeof insertConnectedAccountSchema>;
+export type AudienceSegment = typeof audienceSegments.$inferSelect;
+export type InsertAudienceSegment = z.infer<typeof insertAudienceSegmentSchema>;
+export type OutreachCampaign = typeof outreachCampaigns.$inferSelect;
+export type InsertOutreachCampaign = z.infer<typeof insertOutreachCampaignSchema>;

@@ -1,7 +1,14 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertActivitySchema, insertSystemMetricsSchema, insertPerformanceMetricsSchema } from "@shared/schema";
+import { 
+  insertActivitySchema, 
+  insertSystemMetricsSchema, 
+  insertPerformanceMetricsSchema,
+  insertConnectedAccountSchema,
+  insertAudienceSegmentSchema,
+  insertOutreachCampaignSchema 
+} from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
@@ -132,6 +139,186 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(201).json(metrics);
     } catch (error) {
       res.status(400).json({ message: "Invalid performance metrics data" });
+    }
+  });
+
+  // Connected Accounts Routes
+  app.get("/api/connected-accounts", async (req, res) => {
+    try {
+      const accounts = await storage.getConnectedAccounts();
+      res.json(accounts);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch connected accounts" });
+    }
+  });
+
+  app.get("/api/connected-accounts/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const account = await storage.getConnectedAccount(id);
+      if (!account) {
+        return res.status(404).json({ message: "Connected account not found" });
+      }
+      res.json(account);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch connected account" });
+    }
+  });
+
+  app.post("/api/connected-accounts", async (req, res) => {
+    try {
+      const validatedData = insertConnectedAccountSchema.parse(req.body);
+      const account = await storage.createConnectedAccount(validatedData);
+      res.status(201).json(account);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid connected account data" });
+    }
+  });
+
+  app.patch("/api/connected-accounts/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updateData = req.body;
+      const account = await storage.updateConnectedAccount(id, updateData);
+      if (!account) {
+        return res.status(404).json({ message: "Connected account not found" });
+      }
+      res.json(account);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update connected account" });
+    }
+  });
+
+  app.delete("/api/connected-accounts/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const deleted = await storage.deleteConnectedAccount(id);
+      if (!deleted) {
+        return res.status(404).json({ message: "Connected account not found" });
+      }
+      res.json({ message: "Connected account deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete connected account" });
+    }
+  });
+
+  // Audience Segments Routes
+  app.get("/api/audience-segments", async (req, res) => {
+    try {
+      const segments = await storage.getAudienceSegments();
+      res.json(segments);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch audience segments" });
+    }
+  });
+
+  app.get("/api/audience-segments/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const segment = await storage.getAudienceSegment(id);
+      if (!segment) {
+        return res.status(404).json({ message: "Audience segment not found" });
+      }
+      res.json(segment);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch audience segment" });
+    }
+  });
+
+  app.post("/api/audience-segments", async (req, res) => {
+    try {
+      const validatedData = insertAudienceSegmentSchema.parse(req.body);
+      const segment = await storage.createAudienceSegment(validatedData);
+      res.status(201).json(segment);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid audience segment data" });
+    }
+  });
+
+  app.patch("/api/audience-segments/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updateData = req.body;
+      const segment = await storage.updateAudienceSegment(id, updateData);
+      if (!segment) {
+        return res.status(404).json({ message: "Audience segment not found" });
+      }
+      res.json(segment);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update audience segment" });
+    }
+  });
+
+  app.delete("/api/audience-segments/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const deleted = await storage.deleteAudienceSegment(id);
+      if (!deleted) {
+        return res.status(404).json({ message: "Audience segment not found" });
+      }
+      res.json({ message: "Audience segment deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete audience segment" });
+    }
+  });
+
+  // Outreach Campaigns Routes
+  app.get("/api/outreach-campaigns", async (req, res) => {
+    try {
+      const campaigns = await storage.getOutreachCampaigns();
+      res.json(campaigns);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch outreach campaigns" });
+    }
+  });
+
+  app.get("/api/outreach-campaigns/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const campaign = await storage.getOutreachCampaign(id);
+      if (!campaign) {
+        return res.status(404).json({ message: "Outreach campaign not found" });
+      }
+      res.json(campaign);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch outreach campaign" });
+    }
+  });
+
+  app.post("/api/outreach-campaigns", async (req, res) => {
+    try {
+      const validatedData = insertOutreachCampaignSchema.parse(req.body);
+      const campaign = await storage.createOutreachCampaign(validatedData);
+      res.status(201).json(campaign);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid outreach campaign data" });
+    }
+  });
+
+  app.patch("/api/outreach-campaigns/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updateData = req.body;
+      const campaign = await storage.updateOutreachCampaign(id, updateData);
+      if (!campaign) {
+        return res.status(404).json({ message: "Outreach campaign not found" });
+      }
+      res.json(campaign);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update outreach campaign" });
+    }
+  });
+
+  app.delete("/api/outreach-campaigns/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const deleted = await storage.deleteOutreachCampaign(id);
+      if (!deleted) {
+        return res.status(404).json({ message: "Outreach campaign not found" });
+      }
+      res.json({ message: "Outreach campaign deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete outreach campaign" });
     }
   });
 

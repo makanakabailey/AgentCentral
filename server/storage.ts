@@ -4,6 +4,9 @@ import {
   activities,
   databaseStats,
   performanceMetrics,
+  connectedAccounts,
+  audienceSegments,
+  outreachCampaigns,
   type Agent,
   type InsertAgent,
   type SystemMetrics,
@@ -14,6 +17,12 @@ import {
   type InsertDatabaseStats,
   type PerformanceMetrics,
   type InsertPerformanceMetrics,
+  type ConnectedAccount,
+  type InsertConnectedAccount,
+  type AudienceSegment,
+  type InsertAudienceSegment,
+  type OutreachCampaign,
+  type InsertOutreachCampaign,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -40,6 +49,27 @@ export interface IStorage {
   // Performance Metrics
   getLatestPerformanceMetrics(): Promise<PerformanceMetrics | undefined>;
   createPerformanceMetrics(metrics: InsertPerformanceMetrics): Promise<PerformanceMetrics>;
+
+  // Connected Accounts
+  getConnectedAccounts(): Promise<ConnectedAccount[]>;
+  getConnectedAccount(id: number): Promise<ConnectedAccount | undefined>;
+  createConnectedAccount(account: InsertConnectedAccount): Promise<ConnectedAccount>;
+  updateConnectedAccount(id: number, account: Partial<InsertConnectedAccount>): Promise<ConnectedAccount | undefined>;
+  deleteConnectedAccount(id: number): Promise<boolean>;
+
+  // Audience Segments
+  getAudienceSegments(): Promise<AudienceSegment[]>;
+  getAudienceSegment(id: number): Promise<AudienceSegment | undefined>;
+  createAudienceSegment(segment: InsertAudienceSegment): Promise<AudienceSegment>;
+  updateAudienceSegment(id: number, segment: Partial<InsertAudienceSegment>): Promise<AudienceSegment | undefined>;
+  deleteAudienceSegment(id: number): Promise<boolean>;
+
+  // Outreach Campaigns
+  getOutreachCampaigns(): Promise<OutreachCampaign[]>;
+  getOutreachCampaign(id: number): Promise<OutreachCampaign | undefined>;
+  createOutreachCampaign(campaign: InsertOutreachCampaign): Promise<OutreachCampaign>;
+  updateOutreachCampaign(id: number, campaign: Partial<InsertOutreachCampaign>): Promise<OutreachCampaign | undefined>;
+  deleteOutreachCampaign(id: number): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -48,12 +78,18 @@ export class MemStorage implements IStorage {
   private activities: Map<number, Activity> = new Map();
   private databaseStats: Map<number, DatabaseStats> = new Map();
   private performanceMetrics: Map<number, PerformanceMetrics> = new Map();
+  private connectedAccounts: Map<number, ConnectedAccount> = new Map();
+  private audienceSegments: Map<number, AudienceSegment> = new Map();
+  private outreachCampaigns: Map<number, OutreachCampaign> = new Map();
   
   private agentIdCounter = 1;
   private systemMetricsIdCounter = 1;
   private activityIdCounter = 1;
   private databaseStatsIdCounter = 1;
   private performanceMetricsIdCounter = 1;
+  private connectedAccountIdCounter = 1;
+  private audienceSegmentIdCounter = 1;
+  private outreachCampaignIdCounter = 1;
 
   constructor() {
     this.initializeData();
@@ -303,8 +339,10 @@ export class MemStorage implements IStorage {
     const activity: Activity = {
       ...insertActivity,
       id,
+      agentId: insertActivity.agentId || null,
       timestamp: new Date(),
       type: insertActivity.type || "info",
+      agentId: insertActivity.agentId || null,
     };
     this.activities.set(id, activity);
     return activity;
@@ -355,6 +393,141 @@ export class MemStorage implements IStorage {
     };
     this.performanceMetrics.set(id, metrics);
     return metrics;
+  }
+
+  // Connected Accounts Methods
+  async getConnectedAccounts(): Promise<ConnectedAccount[]> {
+    return Array.from(this.connectedAccounts.values()).sort((a, b) => a.id - b.id);
+  }
+
+  async getConnectedAccount(id: number): Promise<ConnectedAccount | undefined> {
+    return this.connectedAccounts.get(id);
+  }
+
+  async createConnectedAccount(insertAccount: InsertConnectedAccount): Promise<ConnectedAccount> {
+    const id = this.connectedAccountIdCounter++;
+    const account: ConnectedAccount = {
+      ...insertAccount,
+      id,
+      createdAt: new Date(),
+      lastSync: null,
+      expiresAt: null,
+      isActive: insertAccount.isActive ?? true,
+      accountId: insertAccount.accountId || null,
+      accessToken: insertAccount.accessToken || null,
+      refreshToken: insertAccount.refreshToken || null,
+      permissions: insertAccount.permissions || [],
+      profileData: insertAccount.profileData || {},
+    };
+    this.connectedAccounts.set(id, account);
+    return account;
+  }
+
+  async updateConnectedAccount(id: number, updateAccount: Partial<InsertConnectedAccount>): Promise<ConnectedAccount | undefined> {
+    const existing = this.connectedAccounts.get(id);
+    if (!existing) return undefined;
+    
+    const updated: ConnectedAccount = {
+      ...existing,
+      ...updateAccount,
+      lastSync: new Date(),
+    };
+    this.connectedAccounts.set(id, updated);
+    return updated;
+  }
+
+  async deleteConnectedAccount(id: number): Promise<boolean> {
+    return this.connectedAccounts.delete(id);
+  }
+
+  // Audience Segments Methods
+  async getAudienceSegments(): Promise<AudienceSegment[]> {
+    return Array.from(this.audienceSegments.values()).sort((a, b) => a.id - b.id);
+  }
+
+  async getAudienceSegment(id: number): Promise<AudienceSegment | undefined> {
+    return this.audienceSegments.get(id);
+  }
+
+  async createAudienceSegment(insertSegment: InsertAudienceSegment): Promise<AudienceSegment> {
+    const id = this.audienceSegmentIdCounter++;
+    const segment: AudienceSegment = {
+      ...insertSegment,
+      id,
+      lastUpdated: new Date(),
+      description: insertSegment.description || null,
+      isActive: insertSegment.isActive ?? true,
+      tags: insertSegment.tags || [],
+      estimatedSize: insertSegment.estimatedSize || null,
+      platforms: insertSegment.platforms || [],
+    };
+    this.audienceSegments.set(id, segment);
+    return segment;
+  }
+
+  async updateAudienceSegment(id: number, updateSegment: Partial<InsertAudienceSegment>): Promise<AudienceSegment | undefined> {
+    const existing = this.audienceSegments.get(id);
+    if (!existing) return undefined;
+    
+    const updated: AudienceSegment = {
+      ...existing,
+      ...updateSegment,
+      lastUpdated: new Date(),
+    };
+    this.audienceSegments.set(id, updated);
+    return updated;
+  }
+
+  async deleteAudienceSegment(id: number): Promise<boolean> {
+    return this.audienceSegments.delete(id);
+  }
+
+  // Outreach Campaigns Methods
+  async getOutreachCampaigns(): Promise<OutreachCampaign[]> {
+    return Array.from(this.outreachCampaigns.values()).sort((a, b) => a.id - b.id);
+  }
+
+  async getOutreachCampaign(id: number): Promise<OutreachCampaign | undefined> {
+    return this.outreachCampaigns.get(id);
+  }
+
+  async createOutreachCampaign(insertCampaign: InsertOutreachCampaign): Promise<OutreachCampaign> {
+    const id = this.outreachCampaignIdCounter++;
+    const campaign: OutreachCampaign = {
+      ...insertCampaign,
+      id,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      description: insertCampaign.description || null,
+      audienceSegmentId: insertCampaign.audienceSegmentId || null,
+      messageTemplates: insertCampaign.messageTemplates || {},
+      status: insertCampaign.status || "draft",
+      startDate: insertCampaign.startDate || null,
+      endDate: insertCampaign.endDate || null,
+      targetCount: insertCampaign.targetCount || null,
+      sentCount: insertCampaign.sentCount || 0,
+      responseCount: insertCampaign.responseCount || 0,
+      settings: insertCampaign.settings || {},
+    };
+    this.outreachCampaigns.set(id, campaign);
+    return campaign;
+  }
+
+  async updateOutreachCampaign(id: number, updateCampaign: Partial<InsertOutreachCampaign>): Promise<OutreachCampaign | undefined> {
+    const existing = this.outreachCampaigns.get(id);
+    if (!existing) return undefined;
+    
+    const updated: OutreachCampaign = {
+      ...existing,
+      ...updateCampaign,
+      updatedAt: new Date(),
+    };
+    this.outreachCampaigns.set(id, updated);
+    return updated;
+  }
+
+  async deleteOutreachCampaign(id: number): Promise<boolean> {
+    return this.outreachCampaigns.delete(id);
   }
 }
 
