@@ -70,9 +70,11 @@ export default function PerformanceOracle() {
               <Download className="w-4 h-4 lg:w-5 lg:h-5 text-dark-accent" />
             </button>
             
-            <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
-              <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
-            </button>
+            <Link href="/agents/performance-oracle/settings">
+              <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
+                <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
+              </button>
+            </Link>
           </div>
         </div>
       </header>
@@ -116,7 +118,7 @@ export default function PerformanceOracle() {
               <p className="text-xs lg:text-sm text-gray-400 font-medium">Content Quality</p>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl lg:text-3xl font-bold text-white gradient-text info-glow">
-                  {performanceMetrics?.contentQuality || '87'}%
+                  {performanceMetrics?.contentQualityScore || '87'}%
                 </span>
                 <span className="text-sm lg:text-base text-gray-400 font-medium">score</span>
               </div>
@@ -164,6 +166,37 @@ export default function PerformanceOracle() {
           </div>
         </div>
 
+        {/* Navigation Buttons */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <Link href="/agents/performance-oracle/controls">
+            <div className="holographic rounded-xl p-6 group hover:scale-105 transition-all duration-300 cursor-pointer">
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-lg bg-purple-500/20">
+                  <BarChart3 className="w-8 h-8 text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white mb-1">Oracle Controls</h3>
+                  <p className="text-sm text-gray-400">Manage analytics modules and optimization</p>
+                </div>
+              </div>
+            </div>
+          </Link>
+          
+          <Link href="/agents/performance-oracle/settings">
+            <div className="holographic rounded-xl p-6 group hover:scale-105 transition-all duration-300 cursor-pointer">
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-lg bg-purple-500/20">
+                  <Settings className="w-8 h-8 text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white mb-1">Settings</h3>
+                  <p className="text-sm text-gray-400">Configure AI models and thresholds</p>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </div>
+
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
@@ -192,7 +225,7 @@ export default function PerformanceOracle() {
               </div>
               
               <div className="h-32 flex items-end gap-2">
-                {(performanceMetrics?.trendData || [60, 45, 70, 55, 80, 65, 90, 75, 85, 95]).map((value, index) => (
+                {(performanceMetrics?.trendData as number[] || [60, 45, 70, 55, 80, 65, 90, 75, 85, 95]).map((value: number, index: number) => (
                   <div key={index} className="flex-1 flex flex-col items-center">
                     <div 
                       className="w-full bg-gradient-to-t from-dark-accent to-dark-accent2 rounded-t-sm transition-all duration-1000 min-h-[4px]"
@@ -425,7 +458,7 @@ export default function PerformanceOracle() {
             </div>
             <div className="flex items-center gap-2">
               <BarChart3 className="w-3 h-3 text-dark-accent" />
-              <span>Quality: {performanceMetrics?.contentQuality || '87'}%</span>
+              <span>Quality: {performanceMetrics?.contentQualityScore || '87'}%</span>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="w-3 h-3 text-dark-accent" />
