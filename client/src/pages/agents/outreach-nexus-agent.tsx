@@ -64,9 +64,11 @@ export default function OutreachNexusAgent() {
               <Brain className="w-4 h-4 lg:w-5 lg:h-5 text-dark-accent2" />
             </button>
             
-            <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
-              <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
-            </button>
+            <Link href="/agents/outreach-nexus/settings">
+              <button className="p-2 lg:p-3 rounded-lg bg-dark-secondary/50 text-gray-400 hover:text-white transition-colors">
+                <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
+              </button>
+            </Link>
           </div>
         </div>
       </header>
@@ -166,9 +168,11 @@ export default function OutreachNexusAgent() {
                 >
                   <Play className="w-4 h-4 text-dark-accent2" />
                 </button>
-                <button className="p-2 rounded-lg bg-dark-surface/50 hover:bg-dark-surface transition-colors">
-                  <Calendar className="w-4 h-4 text-gray-400" />
-                </button>
+                <Link href="/agents/outreach-nexus/scheduler">
+                  <button className="p-2 rounded-lg bg-dark-surface/50 hover:bg-dark-surface transition-colors">
+                    <Calendar className="w-4 h-4 text-gray-400" />
+                  </button>
+                </Link>
               </div>
             </div>
             
@@ -231,33 +235,39 @@ export default function OutreachNexusAgent() {
                 <h3 className="text-xl font-bold text-white">Nexus Controls</h3>
               </div>
               <div className="space-y-3">
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Mail className="w-4 h-4 text-dark-accent2" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Email Sequences</p>
-                      <p className="text-xs text-gray-400">Automated follow-up chains</p>
+                <Link href="/agents/outreach-nexus/controls">
+                  <button className="w-full p-3 rounded-lg bg-orange-500/20 text-left hover:bg-orange-500/30 transition-colors border border-orange-500/30">
+                    <div className="flex items-center gap-3">
+                      <Send className="w-4 h-4 text-orange-400" />
+                      <div>
+                        <p className="text-sm font-medium text-white">Campaign Controls</p>
+                        <p className="text-xs text-gray-400">Manage active outreach campaigns</p>
+                      </div>
                     </div>
-                  </div>
-                </button>
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <MessageSquare className="w-4 h-4 text-dark-accent2" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Social Outreach</p>
-                      <p className="text-xs text-gray-400">Cross-platform messaging</p>
+                  </button>
+                </Link>
+                <Link href="/agents/outreach-nexus/scheduler">
+                  <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Calendar className="w-4 h-4 text-dark-accent2" />
+                      <div>
+                        <p className="text-sm font-medium text-white">Outreach Scheduler</p>
+                        <p className="text-xs text-gray-400">Schedule & automate campaigns</p>
+                      </div>
                     </div>
-                  </div>
-                </button>
-                <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-4 h-4 text-dark-accent2" />
-                    <div>
-                      <p className="text-sm font-medium text-white">Call Scheduling</p>
-                      <p className="text-xs text-gray-400">Voice outreach campaigns</p>
+                  </button>
+                </Link>
+                <Link href="/agents/outreach-nexus/settings">
+                  <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Settings className="w-4 h-4 text-dark-accent2" />
+                      <div>
+                        <p className="text-sm font-medium text-white">Agent Settings</p>
+                        <p className="text-xs text-gray-400">Configuration & preferences</p>
+                      </div>
                     </div>
-                  </div>
-                </button>
+                  </button>
+                </Link>
                 <button className="w-full p-3 rounded-lg bg-dark-surface/50 text-left hover:bg-dark-surface transition-colors">
                   <div className="flex items-center gap-3">
                     <Users className="w-4 h-4 text-dark-accent2" />

@@ -23,6 +23,9 @@ import ContentForgeBulkUpload from "@/pages/agents/content-forge-bulk-upload";
 import ContentForgeTemplates from "@/pages/agents/content-forge-templates";
 import ContentForgeApiKeys from "@/pages/agents/content-forge-api-keys";
 import OutreachNexusAgent from "@/pages/agents/outreach-nexus-agent";
+import OutreachNexusControls from "@/pages/agents/outreach-nexus-controls";
+import OutreachNexusScheduler from "@/pages/agents/outreach-nexus-scheduler";
+import OutreachNexusSettings from "@/pages/agents/outreach-nexus-settings";
 import PerformanceOracle from "@/pages/agents/performance-oracle";
 import UGCCatalystAgent from "@/pages/agents/ugc-catalyst-agent";
 import VoiceMessagingNegotiator from "@/pages/agents/voice-messaging-negotiator";
@@ -52,6 +55,9 @@ function Router() {
       <Route path="/agents/content-forge/templates" component={ContentForgeTemplates} />
       <Route path="/agents/content-forge/api-keys" component={ContentForgeApiKeys} />
       <Route path="/agents/outreach-nexus" component={OutreachNexusAgent} />
+      <Route path="/agents/outreach-nexus/controls" component={OutreachNexusControls} />
+      <Route path="/agents/outreach-nexus/scheduler" component={OutreachNexusScheduler} />
+      <Route path="/agents/outreach-nexus/settings" component={OutreachNexusSettings} />
       <Route path="/agents/performance-oracle" component={PerformanceOracle} />
       <Route path="/agents/ugc-catalyst" component={UGCCatalystAgent} />
       <Route path="/agents/voice-messaging" component={VoiceMessagingNegotiator} />
