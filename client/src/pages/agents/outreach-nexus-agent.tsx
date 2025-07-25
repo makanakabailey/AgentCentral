@@ -235,13 +235,13 @@ export default function OutreachNexusAgent() {
                 <h3 className="text-xl font-bold text-white">Nexus Controls</h3>
               </div>
               <div className="space-y-3">
-                <Link href="/agents/outreach-nexus/controls">
+                <Link href="/agents/outreach-nexus/platforms">
                   <button className="w-full p-3 rounded-lg bg-orange-500/20 text-left hover:bg-orange-500/30 transition-colors border border-orange-500/30">
                     <div className="flex items-center gap-3">
                       <Send className="w-4 h-4 text-orange-400" />
                       <div>
-                        <p className="text-sm font-medium text-white">Campaign Controls</p>
-                        <p className="text-xs text-gray-400">Manage active outreach campaigns</p>
+                        <p className="text-sm font-medium text-white">Platform Previews</p>
+                        <p className="text-xs text-gray-400">Preview & send outreach messages</p>
                       </div>
                     </div>
                   </button>

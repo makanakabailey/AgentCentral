@@ -27,6 +27,7 @@ import OutreachNexusControls from "@/pages/agents/outreach-nexus-controls";
 import OutreachNexusScheduler from "@/pages/agents/outreach-nexus-scheduler";
 import OutreachNexusSettings from "@/pages/agents/outreach-nexus-settings";
 import OutreachNexusAudience from "@/pages/agents/outreach-nexus-audience";
+import OutreachNexusPlatforms from "@/pages/agents/outreach-nexus-platforms";
 import PerformanceOracle from "@/pages/agents/performance-oracle";
 import UGCCatalystAgent from "@/pages/agents/ugc-catalyst-agent";
 import VoiceMessagingNegotiator from "@/pages/agents/voice-messaging-negotiator";
@@ -60,6 +61,7 @@ function Router() {
       <Route path="/agents/outreach-nexus/scheduler" component={OutreachNexusScheduler} />
       <Route path="/agents/outreach-nexus/settings" component={OutreachNexusSettings} />
       <Route path="/agents/outreach-nexus/audience" component={OutreachNexusAudience} />
+      <Route path="/agents/outreach-nexus/platforms" component={OutreachNexusPlatforms} />
       <Route path="/agents/performance-oracle" component={PerformanceOracle} />
       <Route path="/agents/ugc-catalyst" component={UGCCatalystAgent} />
       <Route path="/agents/voice-messaging" component={VoiceMessagingNegotiator} />
