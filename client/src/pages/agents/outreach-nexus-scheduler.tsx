@@ -318,7 +318,7 @@ export default function OutreachNexusScheduler() {
                         type="date"
                         value={newSchedule.scheduledDate}
                         onChange={(e) => setNewSchedule({...newSchedule, scheduledDate: e.target.value})}
-                        className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-white"
+                        className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-gray-400 [color-scheme:dark]"
                         data-testid="input-schedule-date"
                       />
                     </div>
@@ -326,7 +326,7 @@ export default function OutreachNexusScheduler() {
                     <div>
                       <Label htmlFor="schedule-time">Time</Label>
                       <Select value={newSchedule.scheduledTime} onValueChange={(value) => setNewSchedule({...newSchedule, scheduledTime: value})}>
-                        <SelectTrigger className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-white" data-testid="select-schedule-time">
+                        <SelectTrigger className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-gray-400" data-testid="select-schedule-time">
                           <SelectValue placeholder="Select time" />
                         </SelectTrigger>
                         <SelectContent className="bg-dark-surface border-dark-accent/20">
