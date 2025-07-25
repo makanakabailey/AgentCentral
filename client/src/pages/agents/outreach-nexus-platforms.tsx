@@ -515,7 +515,7 @@ export default function OutreachNexusPlatforms() {
                       {isEditing ? (
                         <Input
                           defaultValue={currentTemplate.subject}
-                          className="bg-dark-surface/50 border-dark-accent/30 text-gray-300 placeholder:text-gray-500 mt-1"
+                          className="bg-dark-surface/50 border-dark-accent/30 text-black placeholder:text-gray-500 mt-1"
                         />
                       ) : (
                         <p className="text-white mt-1 p-2 bg-dark-surface/30 rounded">
@@ -531,7 +531,7 @@ export default function OutreachNexusPlatforms() {
                       <Textarea
                         defaultValue={currentTemplate.message}
                         rows={6}
-                        className="bg-dark-surface/50 border-dark-accent/30 text-gray-300 placeholder:text-gray-500 mt-1"
+                        className="bg-dark-surface/50 border-dark-accent/30 text-black placeholder:text-gray-500 mt-1"
                       />
                     ) : (
                       <div className="text-white mt-1 p-3 bg-dark-surface/30 rounded whitespace-pre-line">
@@ -587,7 +587,7 @@ export default function OutreachNexusPlatforms() {
                 <div>
                   <Label className="text-gray-300">Send Time</Label>
                   <Select defaultValue="09:00">
-                    <SelectTrigger className="bg-dark-surface/50 border-dark-accent/30 text-gray-300 mt-1">
+                    <SelectTrigger className="bg-dark-surface/50 border-dark-accent/30 text-black mt-1">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>

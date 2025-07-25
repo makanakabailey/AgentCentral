@@ -268,7 +268,7 @@ export default function OutreachNexusSettings() {
                       id="agent-name"
                       value={settings.agentName}
                       onChange={(e) => updateSetting('agentName', e.target.value)}
-                      className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-white"
+                      className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-black"
                       data-testid="input-agent-name"
                     />
                   </div>
@@ -276,7 +276,7 @@ export default function OutreachNexusSettings() {
                   <div>
                     <Label htmlFor="timezone">Timezone</Label>
                     <Select value={settings.timezone} onValueChange={(value) => updateSetting('timezone', value)}>
-                      <SelectTrigger className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-white" data-testid="select-timezone">
+                      <SelectTrigger className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-black" data-testid="select-timezone">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-dark-surface border-dark-accent/20">
@@ -298,7 +298,7 @@ export default function OutreachNexusSettings() {
                         type="time"
                         value={settings.workingHours.start}
                         onChange={(e) => updateSetting('workingHours.start', e.target.value)}
-                        className="mt-1 bg-dark-primary/50 border-dark-accent/20 text-white"
+                        className="mt-1 bg-dark-primary/50 border-dark-accent/20 text-black"
                         data-testid="input-start-time"
                       />
                     </div>
@@ -309,7 +309,7 @@ export default function OutreachNexusSettings() {
                         type="time"
                         value={settings.workingHours.end}
                         onChange={(e) => updateSetting('workingHours.end', e.target.value)}
-                        className="mt-1 bg-dark-primary/50 border-dark-accent/20 text-white"
+                        className="mt-1 bg-dark-primary/50 border-dark-accent/20 text-black"
                         data-testid="input-end-time"
                       />
                     </div>
@@ -489,7 +489,7 @@ export default function OutreachNexusSettings() {
                       id="email-signature"
                       value={settings.platforms.email.emailSignature}
                       onChange={(e) => updateSetting('platforms.email.emailSignature', e.target.value)}
-                      className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-white"
+                      className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-black"
                       rows={3}
                       data-testid="textarea-email-signature"
                     />
@@ -521,7 +521,7 @@ export default function OutreachNexusSettings() {
                   <div>
                     <Label htmlFor="ai-model">AI Model</Label>
                     <Select value={settings.aiModel} onValueChange={(value) => updateSetting('aiModel', value)}>
-                      <SelectTrigger className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-white" data-testid="select-ai-model">
+                      <SelectTrigger className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-black" data-testid="select-ai-model">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-dark-surface border-dark-accent/20">
@@ -535,7 +535,7 @@ export default function OutreachNexusSettings() {
                   <div>
                     <Label htmlFor="tone-of-voice">Tone of Voice</Label>
                     <Select value={settings.toneOfVoice} onValueChange={(value) => updateSetting('toneOfVoice', value)}>
-                      <SelectTrigger className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-white" data-testid="select-tone">
+                      <SelectTrigger className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-black" data-testid="select-tone">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-dark-surface border-dark-accent/20">
@@ -626,7 +626,7 @@ export default function OutreachNexusSettings() {
                 <div>
                   <Label htmlFor="log-level">Log Level</Label>
                   <Select value={settings.logLevel} onValueChange={(value) => updateSetting('logLevel', value)}>
-                    <SelectTrigger className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-white" data-testid="select-log-level">
+                    <SelectTrigger className="mt-2 bg-dark-primary/50 border-dark-accent/20 text-black" data-testid="select-log-level">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-dark-surface border-dark-accent/20">

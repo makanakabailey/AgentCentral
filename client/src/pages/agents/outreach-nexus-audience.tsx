@@ -495,7 +495,7 @@ export default function OutreachNexusAudience() {
                           value={newSegment.name}
                           onChange={(e) => setNewSegment({...newSegment, name: e.target.value})}
                           placeholder="e.g., Tech Executives"
-                          className="bg-dark-surface/50 border-dark-accent/30 text-gray-300 placeholder:text-gray-500"
+                          className="bg-dark-surface/50 border-dark-accent/30 text-black placeholder:text-gray-500"
                         />
                       </div>
                       <div>
@@ -503,7 +503,7 @@ export default function OutreachNexusAudience() {
                         <Input
                           id="estimated-size"
                           placeholder="e.g., 2500"
-                          className="bg-dark-surface/50 border-dark-accent/30 text-gray-300 placeholder:text-gray-500"
+                          className="bg-dark-surface/50 border-dark-accent/30 text-black placeholder:text-gray-500"
                         />
                       </div>
                     </div>
@@ -515,7 +515,7 @@ export default function OutreachNexusAudience() {
                         value={newSegment.description}
                         onChange={(e) => setNewSegment({...newSegment, description: e.target.value})}
                         placeholder="Describe your target audience..."
-                        className="bg-dark-surface/50 border-dark-accent/30 text-gray-300 placeholder:text-gray-500"
+                        className="bg-dark-surface/50 border-dark-accent/30 text-black placeholder:text-gray-500"
                       />
                     </div>
                     
